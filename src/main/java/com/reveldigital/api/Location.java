@@ -1,0 +1,51 @@
+package com.reveldigital.api;
+
+import com.google.gson.annotations.SerializedName;
+
+/**
+ * Created by Mike on 6/4/2014.
+ */
+public class Location {
+
+    private String city;
+    private String state;
+    private String county;
+    private String country;
+    @SerializedName("postal_code")
+    private String postalCode;
+    private String address;
+    private double latitude;
+    private double longitude;
+
+    public String getCity() {
+        return city;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public String getCounty() {
+        return county;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public String getPostalCode() {
+        return postalCode;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+}
