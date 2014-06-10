@@ -2,10 +2,10 @@ ext {
     SONATYPE_URL = ""
     IS_DEV_BUILD = false
     IS_RELEASE_BUILD = false
-    GROUP = "com.reveldigital.api"
+    GROUP = "com.reveldigital"
 }
 
-version = 1.0
+version = 1.1
 group = GROUP
 
 if (hasProperty("release")) {
@@ -39,6 +39,23 @@ dependencies {
 signing {
     required { IS_RELEASE_BUILD && gradle.taskGraph.hasTask("uploadArchives") }
     sign configurations.archives
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from 'build/docs/javadoc'
+}
+
+task sourcesJar(type: Jar) {
+    from sourceSets.main.allSource
+    classifier = 'sources'
+}
+
+artifacts {
+    archives jar
+
+    archives javadocJar
+    archives sourcesJar
 }
 
 uploadArchives {
