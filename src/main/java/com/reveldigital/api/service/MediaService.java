@@ -5,10 +5,14 @@ import com.reveldigital.api.Media;
 import com.reveldigital.api.client.RevelClient;
 import com.reveldigital.api.client.RevelRequest;
 
+import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.List;
 
 import static com.reveldigital.api.client.IConstants.SEGMENT_MEDIA;
+import static com.reveldigital.api.client.IConstants.DATE_FORMAT;
 
 /**
  * Created by Mike on 6/5/2014.
@@ -70,5 +74,40 @@ public class MediaService extends RevelService {
         } else {
             return ret.get(0);
         }
+    }
+
+    public Media createMedia(Media media, File file) throws IOException {
+        if (media.getFileName() == null)
+            throw new IllegalArgumentException("Filename cannot be null");
+        if (media.getGroupId() == null)
+            throw new IllegalArgumentException("Group Id cannot be null");
+
+        StringBuilder uri = new StringBuilder(SEGMENT_MEDIA);
+        uri.append('/').append(media.getGroupId());
+        uri.append('/').append(media.getFileName());
+
+        HashMap<String, String> params = new HashMap<String, String>();
+        params.put("shared", media.isShared() ? "true" : "false");
+        if (media.getStartDate() != null) {
+            SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+            params.put("start_date", sdf.format(media.getStartDate()));
+        }
+        if (media.getEndDate() != null) {
+            SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+            params.put("end_date", sdf.format(media.getEndDate()));
+        }
+        if (media.getAdvertiserId() != null) {
+            params.put("advertiser_id", media.getAdvertiserId());
+        }
+        if (media.getName() != null) {
+            params.put("name", media.getName());
+        }
+        if (media.getTags() != null) {
+            params.put("description", media.getTags());
+        }
+        RevelRequest request = createRequest(params);
+        request.setUri(uri).setFile(file).setType(Media.class);
+
+        return client.post(request);
     }
 }

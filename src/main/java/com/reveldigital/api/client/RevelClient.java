@@ -19,6 +19,8 @@ import static java.net.HttpURLConnection.*;
  */
 public class RevelClient {
 
+    private static final int BUFFER_SIZE = 64 * 1024;
+
     /**
      * Create API client from URL.
      * <p/>
@@ -41,6 +43,16 @@ public class RevelClient {
      * Content-Type header
      */
     protected static final String HEADER_CONTENT_TYPE = "Content-Type"; //$NON-NLS-1$
+
+    /**
+     * Content-Length header
+     */
+    protected static final String HEADER_CONTENT_LENGTH = "Content-Length";
+
+    /**
+     * Connection header
+     */
+    protected static final String HEADER_CONNECTION = "Connection";
 
     /**
      * Accept header
@@ -80,7 +92,7 @@ public class RevelClient {
     /**
      * Default user agent request header value
      */
-    protected static final String USER_AGENT = "RevelDigitalJava/1.0"; //$NON-NLS-1$
+    protected static final String USER_AGENT = "reveldigital-api/1.0"; //$NON-NLS-1$
 
     /**
      * 422 status code for unprocessable entity
@@ -597,8 +609,53 @@ public class RevelClient {
             }
         } else {
             request.setFixedLengthStreamingMode(0);
-            request.setRequestProperty("Content-Length", "0");
+            request.setRequestProperty(HEADER_CONTENT_LENGTH, "0");
         }
+    }
+
+    protected void sendFile(HttpURLConnection request, File file)
+            throws IOException {
+
+        request.setDoOutput(true);
+        request.setDoInput(true);
+        request.setUseCaches(false);
+        request.setRequestProperty(HEADER_CONTENT_TYPE, CONTENT_TYPE_STREAM);
+        request.setRequestProperty(HEADER_CONNECTION, "Keep-Alive");
+
+        FileInputStream input = null;
+        OutputStream output = null;
+        try {
+            input = new FileInputStream(file);
+            output = request.getOutputStream();
+            copyStream(input, output);
+        } finally {
+            try {
+                if (output != null)
+                    output.close();
+            } catch (IOException ignored) {
+            }
+            try {
+                if (input != null)
+                    input.close();
+            } catch (IOException ignored) {
+            }
+        }
+    }
+
+    private <V> V sendJson(final HttpURLConnection request,
+                           final File file, final Type type) throws IOException {
+        sendFile(request, file);
+        final int code = request.getResponseCode();
+        updateRateLimits(request);
+        if (isOk(code))
+            if (type != null)
+                return parseJson(getStream(request), type);
+            else
+                return null;
+        if (isEmpty(code))
+            return null;
+        throw createException(getStream(request), code,
+                request.getResponseMessage());
     }
 
     private <V> V sendJson(final HttpURLConnection request,
@@ -752,7 +809,11 @@ public class RevelClient {
     public <V> V post(final RevelRequest request)
             throws IOException {
         HttpURLConnection httpRequest = createPost(request.generateUri());
-        return sendJson(httpRequest, request.getBody(), request.getType());
+        if (request.getFile() != null) {
+            return sendJson(httpRequest, request.getFile(), request.getType());
+        } else {
+            return sendJson(httpRequest, request.getBody(), request.getType());
+        }
     }
 
     /**
@@ -766,7 +827,11 @@ public class RevelClient {
     public <V> V put(final RevelRequest request)
             throws IOException {
         HttpURLConnection httpRequest = createPut(request.generateUri());
-        return sendJson(httpRequest, request.getBody(), request.getType());
+        if (request.getFile() != null) {
+            return sendJson(httpRequest, request.getFile(), request.getType());
+        } else {
+            return sendJson(httpRequest, request.getBody(), request.getType());
+        }
     }
 
     /**
@@ -840,5 +905,33 @@ public class RevelClient {
      */
     public int getRequestLimit() {
         return requestLimit;
+    }
+
+    /**
+     * Copies the supplied {@code InputStream} to the provided {@code OutputStream}.
+     * Both streams are always closed, before this method returns.
+     *
+     * @return The bytes copied
+     */
+    static long copyStream(final InputStream source, final OutputStream target)
+            throws IOException {
+
+        long size = 0L;
+        try {
+            final byte[] buffer = new byte[BUFFER_SIZE];
+            int length;
+            while ((length = source.read(buffer, 0, buffer.length)) >= 0) {
+                size += length;
+                target.write(buffer, 0, length);
+            }
+            return size;
+        } finally {
+            if (target != null) {
+                target.close();
+            }
+            if (source != null) {
+                source.close();
+            }
+        }
     }
 }

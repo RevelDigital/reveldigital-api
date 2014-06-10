@@ -2,6 +2,7 @@ package com.reveldigital.api.client;
 
 import com.reveldigital.api.util.UrlUtils;
 
+import java.io.File;
 import java.lang.reflect.Type;
 import java.util.Map;
 
@@ -25,6 +26,8 @@ public class RevelRequest {
     private Type arrayType;
 
     private Object body;
+
+    private File file;
 
     /**
      * Create empty request
@@ -150,6 +153,20 @@ public class RevelRequest {
      */
     public RevelRequest setBody(Object body) {
         this.body = body;
+        return this;
+    }
+
+    /**
+     * @return file
+     */
+    public File getFile() { return file; }
+
+    /**
+     * @param file
+     * @return this request
+     */
+    public RevelRequest setFile(File file) {
+        this.file = file;
         return this;
     }
 

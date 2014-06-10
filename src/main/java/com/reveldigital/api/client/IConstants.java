@@ -11,9 +11,11 @@ public interface IConstants {
     String CHARSET_ISO_8859_1 = "ISO-8859-1"; //$NON-NLS-1$
     /** */
     String CONTENT_TYPE_JSON = "application/json"; //$NON-NLS-1$
+    /** */
+    String CONTENT_TYPE_STREAM = "application/octet-stream";
 
     /** */
-    String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss'Z'"; //$NON-NLS-1$
+    String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss"; //$NON-NLS-1$
 
     /** */
     String HOST_API = "api.reveldigital.com"; //$NON-NLS-1$
