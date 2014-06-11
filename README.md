@@ -56,6 +56,6 @@ Account account = service.getAccount();
 
 # License
 
-Copyright (c) 2012 - 2014 Mike Tinnes
+Copyright (c) 2014 Mike Tinnes
 
 Licensed under the Apache License, Version 2.0: http://www.apache.org/licenses/LICENSE-2.0
