@@ -1,8 +1,6 @@
 reveldigital-api
 ================
 
-# Overview
-
 Java wrapper library for the RevelDigital HTTP/JSON API. Documentation for the REST API can be found at the
 developers website [http://developer.reveldigital.com](http://developer.reveldigital.com).
 
