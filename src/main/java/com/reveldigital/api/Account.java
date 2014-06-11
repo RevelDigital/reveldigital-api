@@ -86,4 +86,69 @@ public class Account {
     public String getTimezone() {
         return timezone;
     }
+
+    public Account setName(String name) {
+        this.name = name;
+        return this;
+    }
+
+    public Account setBusinessName(String businessName) {
+        this.businessName = businessName;
+        return this;
+    }
+
+    public Account setAddress1(String address1) {
+        this.address1 = address1;
+        return this;
+    }
+
+    public Account setAddress2(String address2) {
+        this.address2 = address2;
+        return this;
+    }
+
+    public Account setCity(String city) {
+        this.city = city;
+        return this;
+    }
+
+    public Account setState(String state) {
+        this.state = state;
+        return this;
+    }
+
+    public Account setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
+        return this;
+    }
+
+    public Account setCountry(String country) {
+        this.country = country;
+        return this;
+    }
+
+    public Account setPhone(String phone) {
+        this.phone = phone;
+        return this;
+    }
+
+    public Account setFax(String fax) {
+        this.fax = fax;
+        return this;
+    }
+
+    public Account setPrimaryContactId(String primaryContactId) {
+        this.primaryContactId = primaryContactId;
+        return this;
+    }
+
+    public Account setSecondaryContactId(String secondaryContactId) {
+        this.secondaryContactId = secondaryContactId;
+        return this;
+    }
+
+    public Account setTimezone(String timezone) {
+        this.timezone = timezone;
+        return this;
+    }
 }

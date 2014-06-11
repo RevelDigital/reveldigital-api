@@ -78,6 +78,12 @@ public class Beacon {
         return this;
     }
 
+    /**
+     * List of device Ids to correspond with this beacon
+     *
+     * @param devices
+     * @return
+     */
     public Beacon setDevices(List<String> devices) {
         this.devices = devices;
         return this;

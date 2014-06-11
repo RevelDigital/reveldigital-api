@@ -11,8 +11,8 @@ import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 
-import static com.reveldigital.api.client.IConstants.SEGMENT_MEDIA;
 import static com.reveldigital.api.client.IConstants.DATE_FORMAT;
+import static com.reveldigital.api.client.IConstants.SEGMENT_MEDIA;
 
 /**
  * Created by Mike on 6/5/2014.
@@ -77,14 +77,12 @@ public class MediaService extends RevelService {
     }
 
     public Media createMedia(Media media, File file) throws IOException {
-        if (media.getFileName() == null)
-            throw new IllegalArgumentException("Filename cannot be null");
         if (media.getGroupId() == null)
             throw new IllegalArgumentException("Group Id cannot be null");
 
         StringBuilder uri = new StringBuilder(SEGMENT_MEDIA);
         uri.append('/').append(media.getGroupId());
-        uri.append('/').append(media.getFileName());
+        uri.append('/').append(file.getName());
 
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("shared", media.isShared() ? "true" : "false");

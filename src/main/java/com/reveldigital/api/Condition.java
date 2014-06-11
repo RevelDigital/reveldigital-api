@@ -17,4 +17,28 @@ public class Condition {
     private String value3;
     @SerializedName("value_4")
     private String value4;
+
+    public String getType() {
+        return type;
+    }
+
+    public int getOperator() {
+        return operator;
+    }
+
+    public String getValue1() {
+        return value1;
+    }
+
+    public String getValue2() {
+        return value2;
+    }
+
+    public String getValue3() {
+        return value3;
+    }
+
+    public String getValue4() {
+        return value4;
+    }
 }

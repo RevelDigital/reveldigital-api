@@ -104,18 +104,8 @@ public class Media {
         return endDate;
     }
 
-    public Media setId(String id) {
-        this.id = id;
-        return this;
-    }
-
     public Media setName(String name) {
         this.name = name;
-        return this;
-    }
-
-    public Media setGroupName(String groupName) {
-        this.groupName = groupName;
         return this;
     }
 
@@ -126,41 +116,6 @@ public class Media {
 
     public Media setTags(String tags) {
         this.tags = tags;
-        return this;
-    }
-
-    public Media setMimeType(String mimeType) {
-        this.mimeType = mimeType;
-        return this;
-    }
-
-    public Media setFileSize(int fileSize) {
-        this.fileSize = fileSize;
-        return this;
-    }
-
-    public Media setFileName(String fileName) {
-        this.fileName = fileName;
-        return this;
-    }
-
-    public Media setFileUrl(String fileUrl) {
-        this.fileUrl = fileUrl;
-        return this;
-    }
-
-    public Media setThumbnailUrl(String thumbnailUrl) {
-        this.thumbnailUrl = thumbnailUrl;
-        return this;
-    }
-
-    public Media setUploadedOn(Date uploadedOn) {
-        this.uploadedOn = uploadedOn;
-        return this;
-    }
-
-    public Media setUploadedBy(String uploadedBy) {
-        this.uploadedBy = uploadedBy;
         return this;
     }
 

@@ -44,4 +44,22 @@ public class AccountService extends RevelService {
         }.getType());
         return client.get(request);
     }
+
+    /**
+     * Update account
+     *
+     * @param account
+     * @return
+     * @throws IOException
+     */
+    public Account updateAccount(Account account) throws IOException {
+        StringBuilder uri = new StringBuilder(SEGMENT_ACCOUNT);
+
+        RevelRequest request = createRequest();
+        request.setUri(uri);
+        request.setType(Account.class);
+        request.setBody(account);
+
+        return client.put(request);
+    }
 }
