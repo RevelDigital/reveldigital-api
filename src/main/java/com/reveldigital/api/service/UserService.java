@@ -71,4 +71,70 @@ public class UserService extends RevelService {
             return ret.get(0);
         }
     }
+
+    /**
+     * Update user
+     *
+     * @param user
+     * @return
+     * @throws java.io.IOException
+     */
+    public User updateUser(User user) throws IOException {
+        StringBuilder uri = new StringBuilder(SEGMENT_USERS);
+        uri.append('/').append(user.getId());
+
+        RevelRequest request = createRequest();
+        request.setUri(uri);
+        request.setType(User.class);
+        request.setBody(user);
+
+        return client.put(request);
+    }
+
+    /**
+     * Create new user
+     *
+     * @param user
+     * @return
+     * @throws IOException
+     */
+    public User createUser(String userName, String password, User user) throws IOException {
+        StringBuilder uri = new StringBuilder(SEGMENT_USERS);
+
+        RevelRequest request = createRequest();
+        request.setUri(uri);
+        request.setType(UserRequest.class);
+        request.setBody(new UserRequest(userName, password, user));
+
+        return client.post(request);
+    }
+
+    private class UserRequest extends User {
+
+        private final String password;
+
+        public UserRequest(String userName, String password, User user) {
+            super.userName = userName;
+            this.password = password;
+
+            if (userName == null)
+                throw new IllegalArgumentException("Username is required");
+            if (password == null)
+                throw new IllegalArgumentException("Password is required");
+            if (user.getEmail() == null)
+                throw new IllegalArgumentException("Email is required");
+
+            setFirstName(user.getFirstName());
+            setLastName(user.getLastName());
+            setCity(user.getCity());
+            setState(user.getState());
+            setPostalCode(user.getPostalCode());
+            setCountry(user.getCountry());
+            setHomePhone(user.getHomePhone());
+            setWorkPhone(user.getWorkPhone());
+            setMobilePhone(user.getMobilePhone());
+            setEmail(user.getEmail());
+            setRole(user.getRole());
+        }
+    }
 }

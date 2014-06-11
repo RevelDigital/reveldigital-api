@@ -78,7 +78,7 @@ public class MediaService extends RevelService {
 
     public Media createMedia(Media media, File file) throws IOException {
         if (media.getGroupId() == null)
-            throw new IllegalArgumentException("Group Id cannot be null");
+            throw new IllegalArgumentException("Group Id is required");
 
         StringBuilder uri = new StringBuilder(SEGMENT_MEDIA);
         uri.append('/').append(media.getGroupId());

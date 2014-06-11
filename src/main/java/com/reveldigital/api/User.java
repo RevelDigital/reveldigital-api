@@ -30,7 +30,7 @@ public class User {
     private String email;
     private String role;
     @SerializedName("user_name")
-    private String userName;
+    protected String userName;
     @SerializedName("last_activity")
     private Date lastActivity;
 
@@ -92,5 +92,65 @@ public class User {
 
     public Date getLastActivity() {
         return lastActivity;
+    }
+
+    public User setFirstName(String firstName) {
+        this.firstName = firstName;
+        return this;
+    }
+
+    public User setLastName(String lastName) {
+        this.lastName = lastName;
+        return this;
+    }
+
+    public User setCity(String city) {
+        this.city = city;
+        return this;
+    }
+
+    public User setState(String state) {
+        this.state = state;
+        return this;
+    }
+
+    public User setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
+        return this;
+    }
+
+    public User setCountry(String country) {
+        this.country = country;
+        return this;
+    }
+
+    public User setHomePhone(String homePhone) {
+        this.homePhone = homePhone;
+        return this;
+    }
+
+    public User setWorkPhone(String workPhone) {
+        this.workPhone = workPhone;
+        return this;
+    }
+
+    public User setMobilePhone(String mobilePhone) {
+        this.mobilePhone = mobilePhone;
+        return this;
+    }
+
+    public User setCreatedOn(Date createdOn) {
+        this.createdOn = createdOn;
+        return this;
+    }
+
+    public User setEmail(String email) {
+        this.email = email;
+        return this;
+    }
+
+    public User setRole(String role) {
+        this.role = role;
+        return this;
     }
 }

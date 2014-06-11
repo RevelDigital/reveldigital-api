@@ -1,7 +1,6 @@
 package com.reveldigital.api.test;
 
 import com.reveldigital.api.User;
-import com.reveldigital.api.client.RequestException;
 import com.reveldigital.api.client.RevelClient;
 import com.reveldigital.api.service.UserService;
 import junit.framework.TestCase;
@@ -23,15 +22,28 @@ public class UserServiceTest extends TestCase {
         client.setApiKey(IConstants.API_KEY);
     }
 
-    public void testGetUsers() throws Exception, RequestException {
+    public void testGetUsers() throws Exception {
         UserService service = new UserService(client);
         List<User> ret = service.getUsers();
         assertTrue(ret.size() > 0);
     }
 
-    public void testGetUser() throws Exception, RequestException {
+    public void testGetUser() throws Exception {
         UserService service = new UserService(client);
         User ret = service.getUser("IrcEv6dviZU");
         assertTrue(ret.getFirstName().equals("Catalyst"));
     }
+
+//    public void testCreateUser() throws Exception {
+//        UserService service = new UserService(client);
+//
+//        User user = new User();
+//        user.setFirstName("John");
+//        user.setLastName("Doe");
+//        user.setRole("User");
+//        user.setEmail("abc@xyz.com");
+//
+//        User ret = service.createUser("test-create-api", "password", user);
+//        assertTrue(ret.getFirstName().equals("John"));
+//    }
 }
