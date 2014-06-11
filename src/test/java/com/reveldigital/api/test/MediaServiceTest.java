@@ -41,12 +41,12 @@ public class MediaServiceTest extends TestCase {
         MediaService service = new MediaService(client);
 
         Media media = new Media();
-        media.setFileName("test-upload.jpg");
+        //media.setFileName("test-upload.jpg");
         media.setGroupId("UqbsxpALaRY");
         media.setEndDate(new Date());
         media.setTags("testing");
 
         Media ret = service.createMedia(media, new File("C:\\REVEL\\Media\\80913!100_0555.jpg"));
-        assertTrue(ret.getName().equals("test-upload.jpg"));
+        assertTrue(ret.getName().equals("80913!100_0555.jpg"));
     }
 }
