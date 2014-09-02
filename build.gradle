@@ -5,7 +5,7 @@ ext {
     GROUP = "com.reveldigital"
 }
 
-version = 1.1
+version = 1.2
 group = GROUP
 
 if (hasProperty("release")) {
@@ -33,7 +33,7 @@ jar {
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
-    compile 'com.google.code.gson:gson:2.2.4'
+    compile 'com.google.code.gson:gson:2.3'
 }
 
 signing {

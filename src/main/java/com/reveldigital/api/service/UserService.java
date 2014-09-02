@@ -134,7 +134,7 @@ public class UserService extends RevelService {
             setWorkPhone(user.getWorkPhone());
             setMobilePhone(user.getMobilePhone());
             setEmail(user.getEmail());
-            setRole(user.getRole());
+            setRoles(user.getRoles());
         }
     }
 }

@@ -3,6 +3,7 @@ package com.reveldigital.api;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Mike on 6/5/2014.
@@ -28,7 +29,8 @@ public class User {
     @SerializedName("created_on")
     private Date createdOn;
     private String email;
-    private String role;
+    @SerializedName("role")
+    private List<String> roles;
     @SerializedName("user_name")
     protected String userName;
     @SerializedName("last_activity")
@@ -82,8 +84,8 @@ public class User {
         return email;
     }
 
-    public String getRole() {
-        return role;
+    public List<String> getRoles() {
+        return roles;
     }
 
     public String getUserName() {
@@ -149,8 +151,8 @@ public class User {
         return this;
     }
 
-    public User setRole(String role) {
-        this.role = role;
+    public User setRoles(List<String> roles) {
+        this.roles = roles;
         return this;
     }
 }
