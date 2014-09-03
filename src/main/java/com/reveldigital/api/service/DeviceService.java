@@ -118,6 +118,26 @@ public class DeviceService extends RevelService {
     }
 
     /**
+     * Create new device
+     *
+     * @param device
+     * @return
+     * @throws IOException
+     */
+    public Device createDevice(String activationCode, Device device) throws IOException {
+        StringBuilder uri = new StringBuilder(SEGMENT_DEVICES);
+
+        HashMap<String, String> params = new HashMap<String, String>();
+        params.put("activation_code", activationCode);
+
+        RevelRequest request = createRequest(params);
+        request.setUri(uri);
+        request.setType(Device.class);
+        request.setBody(device);
+
+        return client.post(request);
+    }
+    /**
      * Post a set of commands to a device
      *
      * @param id

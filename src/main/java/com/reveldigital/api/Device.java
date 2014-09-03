@@ -122,4 +122,9 @@ public class Device {
         this.beacon = beacon;
         return this;
     }
+
+    public Device setMacAddress(String macAddress) {
+        this.macAddress = macAddress;
+        return this;
+    }
 }

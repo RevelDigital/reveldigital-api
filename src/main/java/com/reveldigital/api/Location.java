@@ -48,4 +48,44 @@ public class Location {
     public double getLongitude() {
         return longitude;
     }
+
+    public Location setCity(String city) {
+        this.city = city;
+        return this;
+    }
+
+    public Location setState(String state) {
+        this.state = state;
+        return this;
+    }
+
+    public Location setCounty(String county) {
+        this.county = county;
+        return this;
+    }
+
+    public Location setCountry(String country) {
+        this.country = country;
+        return this;
+    }
+
+    public Location setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
+        return this;
+    }
+
+    public Location setAddress(String address) {
+        this.address = address;
+        return this;
+    }
+
+    public Location setLatitude(double latitude) {
+        this.latitude = latitude;
+        return this;
+    }
+
+    public Location setLongitude(double longitude) {
+        this.longitude = longitude;
+        return this;
+    }
 }

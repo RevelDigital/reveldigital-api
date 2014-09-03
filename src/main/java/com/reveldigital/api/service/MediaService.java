@@ -57,7 +57,7 @@ public class MediaService extends RevelService {
      *
      * @param id
      * @return
-     * @throws java.io.IOException
+     * @throws IOException
      */
     public Media getMedia(String id) throws IOException {
         StringBuilder uri = new StringBuilder(SEGMENT_MEDIA);
@@ -76,6 +76,14 @@ public class MediaService extends RevelService {
         }
     }
 
+    /**
+     * Create new media
+     *
+     * @param media
+     * @param file
+     * @return
+     * @throws IOException
+     */
     public Media createMedia(Media media, File file) throws IOException {
         if (media.getGroupId() == null)
             throw new IllegalArgumentException("Group Id is required");
