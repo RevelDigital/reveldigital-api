@@ -1,9 +1,11 @@
 package com.reveldigital.api;
 
+import java.io.Serializable;
+
 /**
  * Created by Mike on 6/5/2014.
  */
-public class Command {
+public class Command implements Serializable {
 
     private String name;
     private String arg;

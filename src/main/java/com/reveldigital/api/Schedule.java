@@ -2,13 +2,14 @@ package com.reveldigital.api;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 /**
  * Created by Mike on 6/5/2014.
  */
-public class Schedule {
+public class Schedule implements Serializable {
 
     private String id;
     private String name;

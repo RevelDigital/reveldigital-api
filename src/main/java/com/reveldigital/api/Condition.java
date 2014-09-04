@@ -2,10 +2,12 @@ package com.reveldigital.api;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * Created by Mike on 6/5/2014.
  */
-public class Condition {
+public class Condition implements Serializable {
 
     private String type;
     private int operator;

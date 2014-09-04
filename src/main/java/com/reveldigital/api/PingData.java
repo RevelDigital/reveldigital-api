@@ -2,10 +2,12 @@ package com.reveldigital.api;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * Created by Mike on 6/4/2014.
  */
-public class PingData {
+public class PingData implements Serializable {
 
     @SerializedName("player_version")
     private String playerVersion;

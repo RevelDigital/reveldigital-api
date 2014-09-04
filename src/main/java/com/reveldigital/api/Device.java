@@ -2,12 +2,13 @@ package com.reveldigital.api;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by Mike on 6/4/2014.
  */
-public class Device {
+public class Device implements Serializable {
 
     private String id;
     private String name;

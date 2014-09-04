@@ -2,10 +2,12 @@ package com.reveldigital.api;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * Created by Mike on 6/4/2014.
  */
-public class Location {
+public class Location implements Serializable {
 
     private String city;
     private String state;
