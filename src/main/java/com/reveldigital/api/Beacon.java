@@ -20,6 +20,9 @@ public class Beacon implements Serializable {
     private String phone;
     private String email;
     List<String> devices;
+    private String uuid;
+    private String major;
+    private String minor;
 
     public double getDistance() {
         return distance;
@@ -47,6 +50,18 @@ public class Beacon implements Serializable {
 
     public List<String> getDevices() {
         return devices;
+    }
+
+    public String getMinor() {
+        return minor;
+    }
+
+    public String getMajor() {
+        return major;
+    }
+
+    public String getUuid() {
+        return uuid;
     }
 
     public Beacon setDistance(double distance) {
@@ -87,6 +102,21 @@ public class Beacon implements Serializable {
      */
     public Beacon setDevices(List<String> devices) {
         this.devices = devices;
+        return this;
+    }
+
+    public Beacon setUuid(String uuid) {
+        this.uuid = uuid;
+        return this;
+    }
+
+    public Beacon setMajor(String major) {
+        this.major = major;
+        return this;
+    }
+
+    public Beacon setMinor(String minor) {
+        this.minor = minor;
         return this;
     }
 }
