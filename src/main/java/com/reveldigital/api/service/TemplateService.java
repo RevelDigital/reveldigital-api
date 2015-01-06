@@ -1,74 +1,55 @@
+/*
+ * Copyright (c) 2015. Catalyst LLC. All right reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.reveldigital.api.service;
 
-import com.google.gson.reflect.TypeToken;
+import com.reveldigital.api.RequestException;
 import com.reveldigital.api.Template;
-import com.reveldigital.api.client.RevelClient;
-import com.reveldigital.api.client.RevelRequest;
+import com.reveldigital.api.service.retrofit.TemplateInterface;
+import retrofit.Callback;
 
-import java.io.IOException;
 import java.util.List;
 
-import static com.reveldigital.api.client.IConstants.SEGMENT_TEMPLATES;
-
 /**
- * Created by Mike on 6/5/2014.
+ * Created by Mike on 5/15/2015.
  */
-public class TemplateService extends RevelService {
+public class TemplateService extends BaseService<TemplateInterface> {
 
-    /**
-     * Create template service
-     */
-    public TemplateService() {
-        super();
+    public List<Template> getTemplates() throws RequestException {
+        return wrapper.getTemplates();
     }
 
-    /**
-     * Create template service for client
-     *
-     * @param client
-     */
-    public TemplateService(RevelClient client) {
-        super(client);
+    public void getTemplates(Callback<List<Template>> callback) throws RequestException {
+        wrapper.getTemplates(callback);
     }
 
-    /**
-     * Get all templates
-     *
-     * @return
-     * @throws java.io.IOException
-     */
-    public List<Template> getTemplates() throws IOException {
-        StringBuilder uri = new StringBuilder(SEGMENT_TEMPLATES);
-
-        RevelRequest request = createRequest();
-        request.setUri(uri);
-        request.setType(new TypeToken<List<Template>>() {
-        }.getType());
-
-        return client.get(request);
+    public Template getTemplate(String id) throws RequestException {
+        return wrapper.getTemplate(id);
     }
 
-    /**
-     * Get template by id
-     *
-     * @param id
-     * @return
-     * @throws java.io.IOException
-     */
-    public Template getTemplate(String id) throws IOException {
-        StringBuilder uri = new StringBuilder(SEGMENT_TEMPLATES);
-        uri.append('/').append(id);
+    public void getTemplate(String id, Callback<Template> callback) throws RequestException {
+        wrapper.getTemplate(id, callback);
+    }
 
-        RevelRequest request = createRequest();
-        request.setUri(uri);
-        request.setType(new TypeToken<List<Template>>() {
-        }.getType());
+    public static class Builder extends BaseService.Builder {
 
-        List<Template> ret = client.get(request);
-        if (ret == null || ret.size() == 0) {
-            return null;
-        } else {
-            return ret.get(0);
+        public TemplateService build() {
+            TemplateService service = new TemplateService();
+            service.wrapper = build(TemplateInterface.class);
+            return service;
         }
     }
 }

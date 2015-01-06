@@ -1,74 +1,55 @@
+/*
+ * Copyright (c) 2015. Catalyst LLC. All right reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.reveldigital.api.service;
 
-import com.google.gson.reflect.TypeToken;
 import com.reveldigital.api.Playlist;
-import com.reveldigital.api.client.RevelClient;
-import com.reveldigital.api.client.RevelRequest;
+import com.reveldigital.api.RequestException;
+import com.reveldigital.api.service.retrofit.PlaylistInterface;
+import retrofit.Callback;
 
-import java.io.IOException;
 import java.util.List;
 
-import static com.reveldigital.api.client.IConstants.SEGMENT_PLAYLISTS;
-
 /**
- * Created by Mike on 6/5/2014.
+ * Created by Mike on 1/5/2015.
  */
-public class PlaylistService extends RevelService {
+public class PlaylistService extends BaseService<PlaylistInterface> {
 
-    /**
-     * Create playlist service
-     */
-    public PlaylistService() {
-        super();
+    public List<Playlist> getPlaylists() throws RequestException {
+        return wrapper.getPlaylists();
     }
 
-    /**
-     * Create playlist service for client
-     *
-     * @param client
-     */
-    public PlaylistService(RevelClient client) {
-        super(client);
+    public void getPlaylists(Callback<List<Playlist>> callback) throws RequestException {
+        wrapper.getPlaylists(callback);
     }
 
-    /**
-     * Get all playlists
-     *
-     * @return
-     * @throws java.io.IOException
-     */
-    public List<Playlist> getPlaylists() throws IOException {
-        StringBuilder uri = new StringBuilder(SEGMENT_PLAYLISTS);
-
-        RevelRequest request = createRequest();
-        request.setUri(uri);
-        request.setType(new TypeToken<List<Playlist>>() {
-        }.getType());
-
-        return client.get(request);
+    public Playlist getPlaylist(String id) throws RequestException {
+        return wrapper.getPlaylist(id);
     }
 
-    /**
-     * Get playlist by id
-     *
-     * @param id
-     * @return
-     * @throws java.io.IOException
-     */
-    public Playlist getPlaylist(String id) throws IOException {
-        StringBuilder uri = new StringBuilder(SEGMENT_PLAYLISTS);
-        uri.append('/').append(id);
+    public void getPlaylist(String id, Callback<Playlist> callback) throws RequestException {
+        wrapper.getPlaylist(id, callback);
+    }
 
-        RevelRequest request = createRequest();
-        request.setUri(uri);
-        request.setType(new TypeToken<List<Playlist>>() {
-        }.getType());
+    public static class Builder extends BaseService.Builder {
 
-        List<Playlist> ret = client.get(request);
-        if (ret == null || ret.size() == 0) {
-            return null;
-        } else {
-            return ret.get(0);
+        public PlaylistService build() {
+            PlaylistService service = new PlaylistService();
+            service.wrapper = build(PlaylistInterface.class);
+            return service;
         }
     }
 }

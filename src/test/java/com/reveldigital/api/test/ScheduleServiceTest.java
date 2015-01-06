@@ -1,37 +1,52 @@
+/*
+ * Copyright (c) 2015. Catalyst LLC. All right reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.reveldigital.api.test;
 
 import com.reveldigital.api.Schedule;
-import com.reveldigital.api.client.RequestException;
-import com.reveldigital.api.client.RevelClient;
 import com.reveldigital.api.service.ScheduleService;
-import junit.framework.TestCase;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.util.List;
 
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by Mike on 6/5/2014.
  */
-public class ScheduleServiceTest extends TestCase {
+public class ScheduleServiceTest {
 
-    RevelClient client;
+    ScheduleService service;
 
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-
-        this.client = new RevelClient();
-        client.setApiKey(IConstants.API_KEY);
+    @Before
+    public void initialize() {
+        service = new ScheduleService.Builder()
+                .setApiKey(IConstants.API_KEY)
+                .build();
     }
 
-    public void testGetSchedules() throws Exception, RequestException {
-        ScheduleService service = new ScheduleService(client);
+    @Test
+    public void testGetSchedules() throws Exception {
         List<Schedule> ret = service.getSchedules();
         assertTrue(ret.size() > 0);
     }
 
-    public void testGetSchedule() throws Exception, RequestException {
-        ScheduleService service = new ScheduleService(client);
+    @Test
+    public void testGetSchedule() throws Exception {
         Schedule ret = service.getSchedule("qIQ-2l5brWw");
         assertTrue(ret.getName().equals("Internal"));
     }

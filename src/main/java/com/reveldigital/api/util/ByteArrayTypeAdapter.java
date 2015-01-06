@@ -14,33 +14,22 @@
  * limitations under the License.
  */
 
-package com.reveldigital.api;
+package com.reveldigital.api.util;
 
-import java.io.Serializable;
+import com.google.gson.*;
+
+import java.lang.reflect.Type;
 
 /**
- * Created by Mike on 6/5/2014.
+ * Created by Mike on 12/23/2014.
  */
-public class Command implements Serializable {
-
-    private String name;
-    private String arg;
-
-    public String getName() {
-        return name;
+public class ByteArrayTypeAdapter implements JsonSerializer<byte[]>, JsonDeserializer<byte[]> {
+    public byte[] deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+        return Base64.decode(json.getAsString());
     }
 
-    public Command setName(String name) {
-        this.name = name;
-        return this;
-    }
-
-    public String getArg() {
-        return arg;
-    }
-
-    public Command setArg(String arg) {
-        this.arg = arg;
-        return this;
+    public JsonElement serialize(byte[] src, Type typeOfSrc, JsonSerializationContext context) {
+        return new JsonPrimitive(Base64.encodeBytes(src));
     }
 }
+

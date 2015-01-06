@@ -1,4 +1,20 @@
-package com.reveldigital.api.client;
+/*
+ * Copyright (c) 2015. Catalyst LLC. All right reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.reveldigital.api.util;
 
 import com.google.gson.*;
 
@@ -11,7 +27,7 @@ import java.util.Date;
 /**
  * Formatter for date formats present in the RevelDigital API.
  */
-public class DateFormatter implements JsonDeserializer<Date>,
+public class DateTypeFormatter implements JsonDeserializer<Date>,
         JsonSerializer<Date> {
 
     private final String DATE_TIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss'Z'"; //$NON-NLS-1$
@@ -23,14 +39,11 @@ public class DateFormatter implements JsonDeserializer<Date>,
     /**
      * Create date formatter
      */
-    public DateFormatter() {
+    public DateTypeFormatter() {
         formats = new DateFormat[3];
         formats[0] = new SimpleDateFormat(DATE_TIME_FORMAT);
         formats[1] = new SimpleDateFormat(DATE_ONLY_FORMAT);
         formats[2] = new SimpleDateFormat(TIME_ONLY_FORMAT);
-        //final TimeZone timeZone = TimeZone.getTimeZone("Zulu"); //$NON-NLS-1$
-        //for (DateFormat format : formats)
-        //    format.setTimeZone(timeZone);
     }
 
     public Date deserialize(JsonElement json, Type typeOfT,

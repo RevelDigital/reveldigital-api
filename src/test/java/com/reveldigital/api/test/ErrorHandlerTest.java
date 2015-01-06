@@ -16,38 +16,34 @@
 
 package com.reveldigital.api.test;
 
-import com.reveldigital.api.Template;
-import com.reveldigital.api.service.TemplateService;
+import com.reveldigital.api.RequestException;
+import com.reveldigital.api.service.DeviceService;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
-
-import java.util.List;
-
-import static org.junit.Assert.assertTrue;
+import org.junit.rules.ExpectedException;
 
 /**
- * Created by Mike on 6/5/2014.
+ * Created by Mike on 1/5/2015.
  */
-public class TemplateServiceTest {
+public class ErrorHandlerTest {
 
-    TemplateService service;
+    DeviceService service;
 
     @Before
     public void initialize() {
-        service = new TemplateService.Builder()
+        service = new DeviceService.Builder()
                 .setApiKey(IConstants.API_KEY)
                 .build();
     }
 
-    @Test
-    public void testGetTemplates() throws Exception {
-        List<Template> ret = service.getTemplates();
-        assertTrue(ret.size() > 0);
-    }
+    @Rule
+    public ExpectedException exception = ExpectedException.none();
 
     @Test
-    public void testGetTemplate() throws Exception {
-        Template ret = service.getTemplate("G0IrSYzbjJA");
-        assertTrue(ret.getName().equals("HudsonsCoffee"));
+    public void testRequestException() throws RequestException {
+
+        exception.expect(RequestException.class);
+        service.getDevice("XXX");
     }
 }

@@ -1,140 +1,85 @@
+/*
+ * Copyright (c) 2015. Catalyst LLC. All right reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.reveldigital.api.service;
 
-import com.google.gson.reflect.TypeToken;
+import com.reveldigital.api.RequestException;
 import com.reveldigital.api.User;
-import com.reveldigital.api.client.RevelClient;
-import com.reveldigital.api.client.RevelRequest;
+import com.reveldigital.api.service.retrofit.UserInterface;
+import retrofit.Callback;
 
-import java.io.IOException;
 import java.util.List;
 
-import static com.reveldigital.api.client.IConstants.SEGMENT_USERS;
-
 /**
- * Created by Mike on 6/5/2014.
+ * Created by Mike on 1/5/2015.
  */
-public class UserService extends RevelService {
+public class UserService extends BaseService<UserInterface> {
 
-    /**
-     * Create user service
-     */
-    public UserService() {
-        super();
+    public List<User> getUsers() throws RequestException {
+        return wrapper.getUsers();
     }
 
-    /**
-     * Create user service for client
-     *
-     * @param client
-     */
-    public UserService(RevelClient client) {
-        super(client);
+    public void getUsers(Callback<List<User>> callback) throws RequestException {
+        wrapper.getUsers(callback);
     }
 
-    /**
-     * Get all users
-     *
-     * @return
-     * @throws java.io.IOException
-     */
-    public List<User> getUsers() throws IOException {
-        StringBuilder uri = new StringBuilder(SEGMENT_USERS);
-
-        RevelRequest request = createRequest();
-        request.setUri(uri);
-        request.setType(new TypeToken<List<User>>() {
-        }.getType());
-
-        return client.get(request);
+    public User getUser(String id) throws RequestException {
+        return wrapper.getUser(id);
     }
 
-    /**
-     * Get user by id
-     *
-     * @param id
-     * @return
-     * @throws java.io.IOException
-     */
-    public User getUser(String id) throws IOException {
-        StringBuilder uri = new StringBuilder(SEGMENT_USERS);
-        uri.append('/').append(id);
-
-        RevelRequest request = createRequest();
-        request.setUri(uri);
-        request.setType(new TypeToken<List<User>>() {
-        }.getType());
-
-        List<User> ret = client.get(request);
-        if (ret == null || ret.size() == 0) {
-            return null;
-        } else {
-            return ret.get(0);
-        }
+    public void getUser(String id, Callback<User> callback) throws RequestException {
+        wrapper.getUser(id, callback);
     }
 
-    /**
-     * Update user
-     *
-     * @param user
-     * @return
-     * @throws java.io.IOException
-     */
-    public User updateUser(User user) throws IOException {
-        StringBuilder uri = new StringBuilder(SEGMENT_USERS);
-        uri.append('/').append(user.getId());
-
-        RevelRequest request = createRequest();
-        request.setUri(uri);
-        request.setType(User.class);
-        request.setBody(user);
-
-        return client.put(request);
+    public User updateUser(User user) throws RequestException {
+        return wrapper.updateUser(user.getId(), user);
     }
 
-    /**
-     * Create new user
-     *
-     * @param user
-     * @return
-     * @throws IOException
-     */
-    public User createUser(String userName, String password, User user) throws IOException {
-        StringBuilder uri = new StringBuilder(SEGMENT_USERS);
-
-        RevelRequest request = createRequest();
-        request.setUri(uri);
-        request.setType(UserRequest.class);
-        request.setBody(new UserRequest(userName, password, user));
-
-        return client.post(request);
+    public void updateUser(User user, Callback<User> callback) throws RequestException {
+        wrapper.updateUser(user.getId(), user, callback);
     }
 
-    private class UserRequest extends User {
+    public User createUser(User user) throws RequestException {
+        if (user.getUserName() == null)
+            throw new IllegalArgumentException("Username is required");
+        if (user.getPassword() == null)
+            throw new IllegalArgumentException("Password is required");
+        if (user.getEmail() == null)
+            throw new IllegalArgumentException("Email is required");
 
-        private final String password;
+        return wrapper.createUser(user);
+    }
 
-        public UserRequest(String userName, String password, User user) {
-            super.userName = userName;
-            this.password = password;
+    public void createUser(User user, Callback<User> callback) throws RequestException {
+        if (user.getUserName() == null)
+            throw new IllegalArgumentException("Username is required");
+        if (user.getPassword() == null)
+            throw new IllegalArgumentException("Password is required");
+        if (user.getEmail() == null)
+            throw new IllegalArgumentException("Email is required");
 
-            if (userName == null)
-                throw new IllegalArgumentException("Username is required");
-            if (password == null)
-                throw new IllegalArgumentException("Password is required");
-            if (user.getEmail() == null)
-                throw new IllegalArgumentException("Email is required");
+        wrapper.createUser(user, callback);
+    }
 
-            setFirstName(user.getFirstName());
-            setLastName(user.getLastName());
-            setCity(user.getCity());
-            setState(user.getState());
-            setPostalCode(user.getPostalCode());
-            setCountry(user.getCountry());
-            setHomePhone(user.getHomePhone());
-            setWorkPhone(user.getWorkPhone());
-            setMobilePhone(user.getMobilePhone());
-            setEmail(user.getEmail());
-            setRoles(user.getRoles());
+    public static class Builder extends BaseService.Builder {
+
+        public UserService build() {
+            UserService service = new UserService();
+            service.wrapper = build(UserInterface.class);
+            return service;
         }
     }
 }

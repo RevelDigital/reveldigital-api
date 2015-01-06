@@ -1,65 +1,54 @@
+/*
+ * Copyright (c) 2015. Catalyst LLC. All right reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.reveldigital.api.service;
 
-import com.google.gson.reflect.TypeToken;
 import com.reveldigital.api.Account;
-import com.reveldigital.api.client.RevelClient;
-import com.reveldigital.api.client.RevelRequest;
-
-import java.io.IOException;
-
-import static com.reveldigital.api.client.IConstants.SEGMENT_ACCOUNT;
+import com.reveldigital.api.RequestException;
+import com.reveldigital.api.service.retrofit.AccountInterface;
+import retrofit.Callback;
+import retrofit.http.Body;
 
 /**
- *
+ * Created by Mike on 1/5/2015.
  */
-public class AccountService extends RevelService {
+public class AccountService extends BaseService<AccountInterface> {
 
-    /**
-     * Create account service
-     */
-    public AccountService() {
-        super();
+    public Account getAccount() throws RequestException {
+        return wrapper.getAccount();
     }
 
-    /**
-     * Create account service for client
-     *
-     * @param client
-     */
-    public AccountService(RevelClient client) {
-        super(client);
+    public void getAccount(Callback<Account> callback) throws RequestException {
+        wrapper.getAccount(callback);
     }
 
-    /**
-     * Get account
-     *
-     * @return account details
-     * @throws java.io.IOException
-     */
-    public Account getAccount() throws IOException {
-        StringBuilder uri = new StringBuilder(SEGMENT_ACCOUNT);
-        RevelRequest request = createRequest();
-        request.setUri(uri);
-        request.setType(new TypeToken<Account>() {
-        }.getType());
-        return client.get(request);
+    public Account updateAccount(@Body Account account) throws RequestException {
+        return wrapper.updateAccount(account);
     }
 
-    /**
-     * Update account
-     *
-     * @param account
-     * @return
-     * @throws IOException
-     */
-    public Account updateAccount(Account account) throws IOException {
-        StringBuilder uri = new StringBuilder(SEGMENT_ACCOUNT);
+    public void updateAccount(@Body Account account, Callback<Account> callback) throws RequestException {
+        wrapper.updateAccount(account, callback);
+    }
 
-        RevelRequest request = createRequest();
-        request.setUri(uri);
-        request.setType(Account.class);
-        request.setBody(account);
+    public static class Builder extends BaseService.Builder {
 
-        return client.put(request);
+        public AccountService build() {
+            AccountService service = new AccountService();
+            service.wrapper = build(AccountInterface.class);
+            return service;
+        }
     }
 }

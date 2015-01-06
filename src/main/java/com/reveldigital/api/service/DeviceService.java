@@ -1,165 +1,89 @@
+/*
+ * Copyright (c) 2015. Catalyst LLC. All right reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.reveldigital.api.service;
 
-import com.google.gson.reflect.TypeToken;
 import com.reveldigital.api.Command;
 import com.reveldigital.api.Device;
-import com.reveldigital.api.client.RevelClient;
-import com.reveldigital.api.client.RevelRequest;
+import com.reveldigital.api.RequestException;
+import com.reveldigital.api.service.retrofit.DeviceInterface;
+import retrofit.Callback;
+import retrofit.client.Response;
 
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
-import static com.reveldigital.api.client.IConstants.SEGMENT_COMMANDS;
-import static com.reveldigital.api.client.IConstants.SEGMENT_DEVICES;
-
 /**
- * Created by Mike on 6/4/2014.
+ * Created by Mike on 1/5/2015.
  */
-public class DeviceService extends RevelService {
+public class DeviceService extends BaseService<DeviceInterface> {
 
-    /**
-     * Create device service
-     */
-    public DeviceService() {
-        super();
+    public List<Device> getDevices() throws RequestException {
+        return wrapper.getDevices(null);
     }
 
-    /**
-     * Create device service for client
-     *
-     * @param client
-     */
-    public DeviceService(RevelClient client) {
-        super(client);
+    public void getDevices(Callback<List<Device>> callback) throws RequestException {
+        wrapper.getDevices(null, callback);
     }
 
-    /**
-     * Get all devices
-     *
-     * @return
-     * @throws java.io.IOException
-     */
-    public List<Device> getDevices() throws IOException {
-        StringBuilder uri = new StringBuilder(SEGMENT_DEVICES);
-
-        RevelRequest request = createRequest();
-        request.setUri(uri);
-        request.setType(new TypeToken<List<Device>>() {
-        }.getType());
-
-        return client.get(request);
+    public List<Device> getDevices(String deviceType) throws RequestException {
+        return wrapper.getDevices(deviceType);
     }
 
-    /**
-     * Get devices by type
-     *
-     * @param deviceType
-     * @return
-     * @throws java.io.IOException
-     */
-    public List<Device> getDevicesByType(String deviceType) throws IOException {
-        StringBuilder uri = new StringBuilder(SEGMENT_DEVICES);
-
-        RevelRequest request = createRequest(new HashMap<String, String>() {
-            {
-                put("api_key", getApiKey());
-            }
-        });
-        request.setUri(uri);
-        request.setType(new TypeToken<List<Device>>() {
-        }.getType());
-
-        return client.get(request);
+    public void getDevices(String deviceType, Callback<List<Device>> callback) throws RequestException {
+        wrapper.getDevices(deviceType, callback);
     }
 
-    /**
-     * Get device by id
-     *
-     * @param id
-     * @return
-     * @throws java.io.IOException
-     */
-    public Device getDevice(String id) throws IOException {
-        StringBuilder uri = new StringBuilder(SEGMENT_DEVICES);
-        uri.append('/').append(id);
+    public Device getDevice(String id) throws RequestException {
+        return wrapper.getDevice(id);
+    }
 
-        RevelRequest request = createRequest();
-        request.setUri(uri);
-        request.setType(new TypeToken<List<Device>>() {
-        }.getType());
+    public void getDevice(String id, Callback<Device> callback) throws RequestException {
+        wrapper.getDevice(id, callback);
+    }
 
-        List<Device> devices = client.get(request);
-        if (devices == null || devices.size() == 0) {
-            return null;
-        } else {
-            return devices.get(0);
+    public Device updateDevice(Device device) throws RequestException {
+        return wrapper.updateDevice(device.getId(), device);
+    }
+
+    public void updateDevice(Device device, Callback<Device> callback) throws RequestException {
+        wrapper.updateDevice(device.getId(), device, callback);
+    }
+
+    public Device createDevice(String activationCode, Device device) throws RequestException {
+        return wrapper.createDevice(activationCode, device);
+    }
+
+    public void createDevice(String activationCode, Device device, Callback<Device> callback) throws RequestException {
+        wrapper.createDevice(activationCode, device, callback);
+    }
+
+    public Response postCommands(String id, List<Command> commands) throws RequestException {
+        return wrapper.postCommands(id, commands);
+    }
+
+    public void postCommands(String id, List<Command> commands, Callback<Response> callback) throws RequestException {
+        wrapper.postCommands(id, commands, callback);
+    }
+
+    public static class Builder extends BaseService.Builder {
+
+        public DeviceService build() {
+            DeviceService service = new DeviceService();
+            service.wrapper = build(DeviceInterface.class);
+            return service;
         }
-    }
-
-    /**
-     * Update device
-     *
-     * @param device
-     * @return
-     * @throws java.io.IOException
-     */
-    public Device updateDevice(Device device) throws IOException {
-        StringBuilder uri = new StringBuilder(SEGMENT_DEVICES);
-        uri.append('/').append(device.getId());
-
-        RevelRequest request = createRequest();
-        request.setUri(uri);
-        request.setType(Device.class);
-        request.setBody(device);
-
-        return client.put(request);
-    }
-
-    /**
-     * Create new device
-     *
-     * @param device
-     * @return
-     * @throws IOException
-     */
-    public Device createDevice(String activationCode, Device device) throws IOException {
-        StringBuilder uri = new StringBuilder(SEGMENT_DEVICES);
-
-        HashMap<String, String> params = new HashMap<String, String>();
-        params.put("activation_code", activationCode);
-
-        RevelRequest request = createRequest(params);
-        request.setUri(uri);
-        request.setType(Device.class);
-        request.setBody(device);
-
-        return client.post(request);
-    }
-    /**
-     * Post a set of commands to a device
-     *
-     * @param id
-     * @param commands
-     * @throws java.io.IOException
-     */
-    public void postCommands(String id, Command... commands) throws IOException {
-        if (commands == null)
-            throw new IllegalArgumentException("Commands cannot be null");
-        if (commands.length == 0)
-            throw new IllegalArgumentException("Commands cannot be empty");
-
-        StringBuilder uri = new StringBuilder(SEGMENT_DEVICES);
-        uri.append('/').append(id);
-        uri.append(SEGMENT_COMMANDS);
-
-        RevelRequest request = createRequest();
-        request.setUri(uri);
-        request.setBody(Arrays.asList(commands));
-        request.setType(new TypeToken<List<Device>>() {
-        }.getType());
-
-        client.post(request);
     }
 }

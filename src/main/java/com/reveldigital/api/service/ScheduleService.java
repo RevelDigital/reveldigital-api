@@ -1,74 +1,55 @@
+/*
+ * Copyright (c) 2015. Catalyst LLC. All right reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.reveldigital.api.service;
 
-import com.google.gson.reflect.TypeToken;
+import com.reveldigital.api.RequestException;
 import com.reveldigital.api.Schedule;
-import com.reveldigital.api.client.RevelClient;
-import com.reveldigital.api.client.RevelRequest;
+import com.reveldigital.api.service.retrofit.ScheduleInterface;
+import retrofit.Callback;
 
-import java.io.IOException;
 import java.util.List;
 
-import static com.reveldigital.api.client.IConstants.SEGMENT_SCHEDULES;
-
 /**
- * Created by Mike on 6/5/2014.
+ * Created by Mike on 1/5/2015.
  */
-public class ScheduleService extends RevelService {
+public class ScheduleService extends BaseService<ScheduleInterface> {
 
-    /**
-     * Create device service
-     */
-    public ScheduleService() {
-        super();
+    public List<Schedule> getSchedules() throws RequestException {
+        return wrapper.getSchedules();
     }
 
-    /**
-     * Create schedule service for client
-     *
-     * @param client
-     */
-    public ScheduleService(RevelClient client) {
-        super(client);
+    public void getSchedules(Callback<List<Schedule>> callback) throws RequestException {
+        wrapper.getSchedules(callback);
     }
 
-    /**
-     * Get all schedules
-     *
-     * @return
-     * @throws java.io.IOException
-     */
-    public List<Schedule> getSchedules() throws IOException {
-        StringBuilder uri = new StringBuilder(SEGMENT_SCHEDULES);
-
-        RevelRequest request = createRequest();
-        request.setUri(uri);
-        request.setType(new TypeToken<List<Schedule>>() {
-        }.getType());
-
-        return client.get(request);
+    public Schedule getSchedule(String id) throws RequestException {
+        return wrapper.getSchedule(id);
     }
 
-    /**
-     * Get schedule by id
-     *
-     * @param id
-     * @return
-     * @throws java.io.IOException
-     */
-    public Schedule getSchedule(String id) throws IOException {
-        StringBuilder uri = new StringBuilder(SEGMENT_SCHEDULES);
-        uri.append('/').append(id);
+    public void getSchedule(String id, Callback<Schedule> callback) throws RequestException {
+        wrapper.getSchedule(id, callback);
+    }
 
-        RevelRequest request = createRequest();
-        request.setUri(uri);
-        request.setType(new TypeToken<List<Schedule>>() {
-        }.getType());
+    public static class Builder extends BaseService.Builder {
 
-        List<Schedule> ret = client.get(request);
-        if (ret == null || ret.size() == 0) {
-            return null;
-        } else {
-            return ret.get(0);
+        public ScheduleService build() {
+            ScheduleService service = new ScheduleService();
+            service.wrapper = build(ScheduleInterface.class);
+            return service;
         }
     }
 }
