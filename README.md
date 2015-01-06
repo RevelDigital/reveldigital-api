@@ -40,7 +40,7 @@ on the _Account > Account Information_ page.
 
 Please see [http://www.reveldigital.com](http://www.reveldigital.com) for more information on RevelDigital services.
 
-Usage typically starts with creation of a reusable (and thread-safe, once configured) `RevelClient` instance:
+Usage typically starts with creation of a service using a service specific `Builder` instance:
 
 ```java
 DeviceService service = new DeviceService.Builder()
