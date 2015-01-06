@@ -20,7 +20,7 @@ To use the package, you need to use following Maven dependency:
 <dependency>
   <groupId>com.reveldigital</groupId>
   <artifactId>reveldigital-api</artifactId>
-  <version>1.3.4</version>
+  <version>1.4.0</version>
 </dependency>
 ```
 
@@ -43,15 +43,10 @@ Please see [http://www.reveldigital.com](http://www.reveldigital.com) for more i
 Usage typically starts with creation of a reusable (and thread-safe, once configured) `RevelClient` instance:
 
 ```java
-RevelClient client = new RevelClient();
-client.setApiKey("YOUR_KEY");
-```
-
-Services are then called using the client object:
-
-```java
-AccountService service = new AccountService(client);
-Account account = service.getAccount();
+DeviceService service = new DeviceService.Builder()
+                .setApiKey("My API Key")
+                .build();
+List<Device> devices = service.getDevices();
 ```
 
 # License
