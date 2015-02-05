@@ -31,7 +31,7 @@ public class Beacon implements Serializable {
     @SerializedName("calibration")
     private double calibration;
     @SerializedName("rating")
-    private int rating;
+    private double rating;
     private String website;
     private String phone;
     private String email;
@@ -48,7 +48,7 @@ public class Beacon implements Serializable {
         return calibration;
     }
 
-    public int getRating() {
+    public double getRating() {
         return rating;
     }
 
@@ -90,7 +90,7 @@ public class Beacon implements Serializable {
         return this;
     }
 
-    public Beacon setRating(int rating) {
+    public Beacon setRating(double rating) {
         this.rating = rating;
         return this;
     }
