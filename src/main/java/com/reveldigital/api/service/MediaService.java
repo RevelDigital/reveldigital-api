@@ -50,10 +50,12 @@ public class MediaService extends BaseService<MediaInterface> {
         wrapper.getMedia(id, callback);
     }
 
-    public Media createMedia(Media media, File file, String mimeType) throws RequestException {
+    public Media createMedia(Media media, File file) throws RequestException {
 
         if (media.getGroupId() == null)
             throw new IllegalArgumentException("Group Id is required");
+        if (media.getMimeType() == null)
+            throw new IllegalArgumentException("Mime Type is required");
 
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("shared", media.isShared() ? "true" : "false");
@@ -75,13 +77,15 @@ public class MediaService extends BaseService<MediaInterface> {
             params.put("description", media.getTags());
         }
 
-        return wrapper.createMedia(media.getGroupId(), file.getName(), new TypedFile(mimeType, file), params);
+        return wrapper.createMedia(media.getGroupId(), file.getName(), new TypedFile(media.getMimeType(), file), params);
     }
 
-    public void createMedia(Media media, File file, String mimeType, Callback<Media> callback) throws RequestException {
+    public void createMedia(Media media, File file, Callback<Media> callback) throws RequestException {
 
         if (media.getGroupId() == null)
             throw new IllegalArgumentException("Group Id is required");
+        if (media.getMimeType() == null)
+            throw new IllegalArgumentException("Mime Type is required");
 
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("shared", media.isShared() ? "true" : "false");
@@ -103,7 +107,7 @@ public class MediaService extends BaseService<MediaInterface> {
             params.put("description", media.getTags());
         }
 
-        wrapper.createMedia(media.getGroupId(), file.getName(), new TypedFile(mimeType, file), params, callback);
+        wrapper.createMedia(media.getGroupId(), file.getName(), new TypedFile(media.getMimeType(), file), params, callback);
     }
 
     public static class Builder extends BaseService.Builder {

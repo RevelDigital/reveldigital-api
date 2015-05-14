@@ -56,11 +56,12 @@ public class MediaServiceTest {
     @Test
     public void testCreateMedia() throws Exception {
         Media media = new Media();
-        media.setGroupId("UqbsxpALaRY");
+        media.setGroupId("UqbsxpALaRY"); // required
+        media.setMimeType("image/png"); // required
         media.setEndDate(new Date());
         media.setTags("testing");
 
-        Media ret = service.createMedia(media, new File("C:\\REVEL\\Media\\revel-logo.png"), "image/png");
+        Media ret = service.createMedia(media, new File("C:\\REVEL\\Media\\revel-logo.png"));
         assertTrue(ret.getName().equals("revel-logo.png"));
     }
 }

@@ -155,4 +155,9 @@ public class Media implements Serializable {
         this.endDate = endDate;
         return this;
     }
+
+    public Media setMimeType(String mimeType) {
+        this.mimeType = mimeType;
+        return this;
+    }
 }
