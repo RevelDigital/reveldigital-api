@@ -22,7 +22,6 @@ import com.reveldigital.api.service.retrofit.MediaInterface;
 import retrofit.Callback;
 import retrofit.mime.TypedFile;
 
-import javax.activation.MimetypesFileTypeMap;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
@@ -51,7 +50,7 @@ public class MediaService extends BaseService<MediaInterface> {
         wrapper.getMedia(id, callback);
     }
 
-    public Media createMedia(Media media, File file) throws RequestException {
+    public Media createMedia(Media media, File file, String mimeType) throws RequestException {
 
         if (media.getGroupId() == null)
             throw new IllegalArgumentException("Group Id is required");
@@ -75,13 +74,11 @@ public class MediaService extends BaseService<MediaInterface> {
         if (media.getTags() != null) {
             params.put("description", media.getTags());
         }
-
-        String mimeType = MimetypesFileTypeMap.getDefaultFileTypeMap().getContentType(file);
 
         return wrapper.createMedia(media.getGroupId(), file.getName(), new TypedFile(mimeType, file), params);
     }
 
-    public void createMedia(Media media, File file, Callback<Media> callback) throws RequestException {
+    public void createMedia(Media media, File file, String mimeType, Callback<Media> callback) throws RequestException {
 
         if (media.getGroupId() == null)
             throw new IllegalArgumentException("Group Id is required");
@@ -105,8 +102,6 @@ public class MediaService extends BaseService<MediaInterface> {
         if (media.getTags() != null) {
             params.put("description", media.getTags());
         }
-
-        String mimeType = MimetypesFileTypeMap.getDefaultFileTypeMap().getContentType(file);
 
         wrapper.createMedia(media.getGroupId(), file.getName(), new TypedFile(mimeType, file), params, callback);
     }

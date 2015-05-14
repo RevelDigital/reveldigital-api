@@ -60,7 +60,7 @@ public class MediaServiceTest {
         media.setEndDate(new Date());
         media.setTags("testing");
 
-        Media ret = service.createMedia(media, new File("C:\\REVEL\\Media\\revel-logo.png"));
+        Media ret = service.createMedia(media, new File("C:\\REVEL\\Media\\revel-logo.png"), "image/png");
         assertTrue(ret.getName().equals("revel-logo.png"));
     }
 }
