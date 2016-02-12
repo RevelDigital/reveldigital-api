@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015. Catalyst LLC. All right reserved.
+ * Copyright (c) 2016. Catalyst LLC. All right reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,6 +23,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import java.io.IOException;
+
 /**
  * Created by Mike on 1/5/2015.
  */
@@ -41,7 +43,7 @@ public class ErrorHandlerTest {
     public ExpectedException exception = ExpectedException.none();
 
     @Test
-    public void testRequestException() throws RequestException {
+    public void testRequestException() throws RequestException, IOException {
 
         exception.expect(RequestException.class);
         service.getDevice("XXX");

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015. Catalyst LLC. All right reserved.
+ * Copyright (c) 2016. Catalyst LLC. All right reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,28 +19,30 @@ package com.reveldigital.api.service;
 import com.reveldigital.api.Account;
 import com.reveldigital.api.RequestException;
 import com.reveldigital.api.service.retrofit.AccountInterface;
-import retrofit.Callback;
-import retrofit.http.Body;
+import retrofit2.Callback;
+import retrofit2.http.Body;
+
+import java.io.IOException;
 
 /**
  * Created by Mike on 1/5/2015.
  */
 public class AccountService extends BaseService<AccountInterface> {
 
-    public Account getAccount() throws RequestException {
-        return wrapper.getAccount();
+    public Account getAccount() throws RequestException, IOException {
+        return verifyResponse(wrapper.getAccount().execute());
     }
 
     public void getAccount(Callback<Account> callback) throws RequestException {
-        wrapper.getAccount(callback);
+        wrapper.getAccount().enqueue(callback);
     }
 
-    public Account updateAccount(@Body Account account) throws RequestException {
-        return wrapper.updateAccount(account);
+    public Account updateAccount(@Body Account account) throws RequestException, IOException {
+        return verifyResponse(wrapper.updateAccount(account).execute());
     }
 
     public void updateAccount(@Body Account account, Callback<Account> callback) throws RequestException {
-        wrapper.updateAccount(account, callback);
+        wrapper.updateAccount(account).enqueue(callback);
     }
 
     public static class Builder extends BaseService.Builder {

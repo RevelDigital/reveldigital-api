@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015. Catalyst LLC. All right reserved.
+ * Copyright (c) 2016. Catalyst LLC. All right reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,10 +18,10 @@ package com.reveldigital.api.service.retrofit;
 
 import com.reveldigital.api.Account;
 import com.reveldigital.api.RequestException;
-import retrofit.Callback;
-import retrofit.http.Body;
-import retrofit.http.GET;
-import retrofit.http.PUT;
+import retrofit2.Call;
+import retrofit2.http.Body;
+import retrofit2.http.GET;
+import retrofit2.http.PUT;
 
 import static com.reveldigital.api.IConstants.SEGMENT_ACCOUNT;
 
@@ -31,14 +31,8 @@ import static com.reveldigital.api.IConstants.SEGMENT_ACCOUNT;
 public interface AccountInterface {
 
     @GET(SEGMENT_ACCOUNT)
-    Account getAccount() throws RequestException;
-
-    @GET(SEGMENT_ACCOUNT)
-    void getAccount(Callback<Account> callback) throws RequestException;
+    Call<Account> getAccount() throws RequestException;
 
     @PUT(SEGMENT_ACCOUNT)
-    Account updateAccount(@Body Account account) throws RequestException;
-
-    @PUT(SEGMENT_ACCOUNT)
-    void updateAccount(@Body Account account, Callback<Account> callback) throws RequestException;
+    Call<Account> updateAccount(@Body Account account) throws RequestException;
 }

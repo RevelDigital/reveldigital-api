@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015. Catalyst LLC. All right reserved.
+ * Copyright (c) 2016. Catalyst LLC. All right reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,7 +34,7 @@ public interface IConstants {
     String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ssZ"; //$NON-NLS-1$
 
     /** */
-    String HOST_API = "api.reveldigital.com"; //$NON-NLS-1$
+    String HOST_API = "api.reveldigital.com/"; //$NON-NLS-1$
     /** */
     String HOST_DEFAULT = "reveldigital.com"; //$NON-NLS-1$
 
@@ -44,24 +44,26 @@ public interface IConstants {
     String PARAM_PER_PAGE = "take"; //$NON-NLS-1$
 
     /** */
+    String PROTOCOL_HTTP = "http"; //$NON-NLS-1$
+    /** */
     String PROTOCOL_HTTPS = "https"; //$NON-NLS-1$
 
     /** */
-    String SEGMENT_ACCOUNT = "/account"; //$NON-NLS-1$
+    String SEGMENT_ACCOUNT = "account"; //$NON-NLS-1$
     /** */
-    String SEGMENT_DEVICES = "/devices"; //$NON-NLS-1$
+    String SEGMENT_DEVICES = "devices"; //$NON-NLS-1$
 
-    String SEGMENT_COMMANDS = "/commands";
+    String SEGMENT_COMMANDS = "commands";
 
-    String SEGMENT_MEDIA = "/media";
+    String SEGMENT_MEDIA = "media";
 
-    String SEGMENT_PLAYLISTS = "/playlists";
+    String SEGMENT_PLAYLISTS = "playlists";
 
-    String SEGMENT_SCHEDULES = "/schedules";
+    String SEGMENT_SCHEDULES = "schedules";
 
-    String SEGMENT_TEMPLATES = "/templates";
+    String SEGMENT_TEMPLATES = "templates";
 
-    String SEGMENT_USERS = "/users";
+    String SEGMENT_USERS = "users";
 
     /** */
     String URL_API = PROTOCOL_HTTPS + "://" + HOST_API; //$NON-NLS-1$

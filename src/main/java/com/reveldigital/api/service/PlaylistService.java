@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015. Catalyst LLC. All right reserved.
+ * Copyright (c) 2016. Catalyst LLC. All right reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,8 +19,9 @@ package com.reveldigital.api.service;
 import com.reveldigital.api.Playlist;
 import com.reveldigital.api.RequestException;
 import com.reveldigital.api.service.retrofit.PlaylistInterface;
-import retrofit.Callback;
+import retrofit2.Callback;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -28,20 +29,20 @@ import java.util.List;
  */
 public class PlaylistService extends BaseService<PlaylistInterface> {
 
-    public List<Playlist> getPlaylists() throws RequestException {
-        return wrapper.getPlaylists();
+    public List<Playlist> getPlaylists() throws RequestException, IOException {
+        return verifyResponse(wrapper.getPlaylists().execute());
     }
 
     public void getPlaylists(Callback<List<Playlist>> callback) throws RequestException {
-        wrapper.getPlaylists(callback);
+        wrapper.getPlaylists().enqueue(callback);
     }
 
-    public Playlist getPlaylist(String id) throws RequestException {
-        return wrapper.getPlaylist(id);
+    public Playlist getPlaylist(String id) throws RequestException, IOException {
+        return verifyResponse(wrapper.getPlaylist(id).execute());
     }
 
     public void getPlaylist(String id, Callback<Playlist> callback) throws RequestException {
-        wrapper.getPlaylist(id, callback);
+        wrapper.getPlaylist(id).enqueue(callback);
     }
 
     public static class Builder extends BaseService.Builder {

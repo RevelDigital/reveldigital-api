@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015. Catalyst LLC. All right reserved.
+ * Copyright (c) 2016. Catalyst LLC. All right reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,9 +20,9 @@ import com.reveldigital.api.Account;
 import com.reveldigital.api.service.AccountService;
 import org.junit.Before;
 import org.junit.Test;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
@@ -55,18 +55,17 @@ public class AccountServiceTest {
 
         service.getAccount(new Callback<Account>() {
             @Override
-            public void success(Account account, Response response) {
-                assertTrue("Moorhead".equals(account.getCity()));
+            public void onResponse(Call<Account> call, Response<Account> response) {
+                assertTrue("Moorhead".equals(response.body().getCity()));
                 lock.countDown();
             }
 
             @Override
-            public void failure(RetrofitError error) {
-
+            public void onFailure(Call<Account> call, Throwable t) {
             }
         });
 
-        assert (lock.await(2000, TimeUnit.MILLISECONDS) == true);
+        assert (lock.await(2000, TimeUnit.MILLISECONDS));
     }
 
     @Test

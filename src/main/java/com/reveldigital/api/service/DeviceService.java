@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015. Catalyst LLC. All right reserved.
+ * Copyright (c) 2016. Catalyst LLC. All right reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,9 +20,10 @@ import com.reveldigital.api.Command;
 import com.reveldigital.api.Device;
 import com.reveldigital.api.RequestException;
 import com.reveldigital.api.service.retrofit.DeviceInterface;
-import retrofit.Callback;
-import retrofit.client.Response;
+import okhttp3.ResponseBody;
+import retrofit2.Callback;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -30,52 +31,52 @@ import java.util.List;
  */
 public class DeviceService extends BaseService<DeviceInterface> {
 
-    public List<Device> getDevices() throws RequestException {
-        return wrapper.getDevices(null);
+    public List<Device> getDevices() throws RequestException, IOException {
+        return verifyResponse(wrapper.getDevices(null).execute());
     }
 
     public void getDevices(Callback<List<Device>> callback) throws RequestException {
-        wrapper.getDevices(null, callback);
+        wrapper.getDevices(null).enqueue(callback);
     }
 
-    public List<Device> getDevices(String deviceType) throws RequestException {
-        return wrapper.getDevices(deviceType);
+    public List<Device> getDevices(String deviceType) throws RequestException, IOException {
+        return verifyResponse(wrapper.getDevices(deviceType).execute());
     }
 
     public void getDevices(String deviceType, Callback<List<Device>> callback) throws RequestException {
-        wrapper.getDevices(deviceType, callback);
+        wrapper.getDevices(deviceType).enqueue(callback);
     }
 
-    public Device getDevice(String id) throws RequestException {
-        return wrapper.getDevice(id);
+    public Device getDevice(String id) throws RequestException, IOException {
+        return verifyResponse(wrapper.getDevice(id).execute());
     }
 
     public void getDevice(String id, Callback<Device> callback) throws RequestException {
-        wrapper.getDevice(id, callback);
+        wrapper.getDevice(id).enqueue(callback);
     }
 
-    public Device updateDevice(Device device) throws RequestException {
-        return wrapper.updateDevice(device.getId(), device);
+    public Device updateDevice(Device device) throws RequestException, IOException {
+        return verifyResponse(wrapper.updateDevice(device.getId(), device).execute());
     }
 
     public void updateDevice(Device device, Callback<Device> callback) throws RequestException {
-        wrapper.updateDevice(device.getId(), device, callback);
+        wrapper.updateDevice(device.getId(), device).enqueue(callback);
     }
 
-    public Device createDevice(String activationCode, Device device) throws RequestException {
-        return wrapper.createDevice(activationCode, device);
+    public Device createDevice(String activationCode, Device device) throws RequestException, IOException {
+        return verifyResponse(wrapper.createDevice(activationCode, device).execute());
     }
 
     public void createDevice(String activationCode, Device device, Callback<Device> callback) throws RequestException {
-        wrapper.createDevice(activationCode, device, callback);
+        wrapper.createDevice(activationCode, device).enqueue(callback);
     }
 
-    public Response postCommands(String id, List<Command> commands) throws RequestException {
-        return wrapper.postCommands(id, commands);
+    public void postCommands(String id, List<Command> commands) throws RequestException, IOException {
+        verifyResponse(wrapper.postCommands(id, commands).execute());
     }
 
-    public void postCommands(String id, List<Command> commands, Callback<Response> callback) throws RequestException {
-        wrapper.postCommands(id, commands, callback);
+    public void postCommands(String id, List<Command> commands, Callback<ResponseBody> callback) throws RequestException {
+        wrapper.postCommands(id, commands).enqueue(callback);
     }
 
     public static class Builder extends BaseService.Builder {

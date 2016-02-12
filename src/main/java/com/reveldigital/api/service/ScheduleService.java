@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015. Catalyst LLC. All right reserved.
+ * Copyright (c) 2016. Catalyst LLC. All right reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,8 +19,9 @@ package com.reveldigital.api.service;
 import com.reveldigital.api.RequestException;
 import com.reveldigital.api.Schedule;
 import com.reveldigital.api.service.retrofit.ScheduleInterface;
-import retrofit.Callback;
+import retrofit2.Callback;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -28,20 +29,20 @@ import java.util.List;
  */
 public class ScheduleService extends BaseService<ScheduleInterface> {
 
-    public List<Schedule> getSchedules() throws RequestException {
-        return wrapper.getSchedules();
+    public List<Schedule> getSchedules() throws RequestException, IOException {
+        return verifyResponse(wrapper.getSchedules().execute());
     }
 
     public void getSchedules(Callback<List<Schedule>> callback) throws RequestException {
-        wrapper.getSchedules(callback);
+        wrapper.getSchedules().enqueue(callback);
     }
 
-    public Schedule getSchedule(String id) throws RequestException {
-        return wrapper.getSchedule(id);
+    public Schedule getSchedule(String id) throws RequestException, IOException {
+        return verifyResponse(wrapper.getSchedule(id).execute());
     }
 
     public void getSchedule(String id, Callback<Schedule> callback) throws RequestException {
-        wrapper.getSchedule(id, callback);
+        wrapper.getSchedule(id).enqueue(callback);
     }
 
     public static class Builder extends BaseService.Builder {

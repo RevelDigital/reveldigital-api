@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015. Catalyst LLC. All right reserved.
+ * Copyright (c) 2016. Catalyst LLC. All right reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -39,6 +39,8 @@ public class Beacon implements Serializable {
     private String uuid;
     private String major;
     private String minor;
+    @SerializedName("notification_delay")
+    private int notificationDelay;
 
     public double getDistance() {
         return distance;
@@ -78,6 +80,10 @@ public class Beacon implements Serializable {
 
     public String getUuid() {
         return uuid;
+    }
+
+    public int getNotificationDelay() {
+        return notificationDelay;
     }
 
     public Beacon setDistance(double distance) {
@@ -133,6 +139,11 @@ public class Beacon implements Serializable {
 
     public Beacon setMinor(String minor) {
         this.minor = minor;
+        return this;
+    }
+
+    public Beacon setNotificationDelay(int notificationDelay) {
+        this.notificationDelay = notificationDelay;
         return this;
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015. Catalyst LLC. All right reserved.
+ * Copyright (c) 2016. Catalyst LLC. All right reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,10 +19,12 @@ package com.reveldigital.api.service;
 import com.reveldigital.api.Media;
 import com.reveldigital.api.RequestException;
 import com.reveldigital.api.service.retrofit.MediaInterface;
-import retrofit.Callback;
-import retrofit.mime.TypedFile;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
+import retrofit2.Callback;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
@@ -34,30 +36,29 @@ import static com.reveldigital.api.IConstants.DATE_FORMAT;
  */
 public class MediaService extends BaseService<MediaInterface> {
 
-    public List<Media> getMedias() throws RequestException {
-        return wrapper.getMedias();
+    public List<Media> getMedias() throws RequestException, IOException {
+        return verifyResponse(wrapper.getMedias().execute());
     }
 
     public void getMedias(Callback<List<Media>> callback) throws RequestException {
-        wrapper.getMedias(callback);
+        wrapper.getMedias().enqueue(callback);
     }
 
-    public Media getMedia(String id) throws RequestException {
-        return wrapper.getMedia(id);
+    public Media getMedia(String id) throws RequestException, IOException {
+        return verifyResponse(wrapper.getMedia(id).execute());
     }
 
     public void getMedia(String id, Callback<Media> callback) throws RequestException {
-        wrapper.getMedia(id, callback);
+        wrapper.getMedia(id).enqueue(callback);
     }
 
-    public Media createMedia(Media media, File file) throws RequestException {
+    public Media createMedia(Media media, File file) throws RequestException, IOException {
 
         if (media.getGroupId() == null)
             throw new IllegalArgumentException("Group Id is required");
-        if (media.getMimeType() == null)
-            throw new IllegalArgumentException("Mime Type is required");
 
-        HashMap<String, String> params = new HashMap<String, String>();
+        HashMap<String, String> params = new HashMap<>();
+        params.put("group_id", media.getGroupId());
         params.put("shared", media.isShared() ? "true" : "false");
         if (media.getStartDate() != null) {
             SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
@@ -77,17 +78,20 @@ public class MediaService extends BaseService<MediaInterface> {
             params.put("description", media.getTags());
         }
 
-        return wrapper.createMedia(media.getGroupId(), file.getName(), new TypedFile(media.getMimeType(), file), params);
+        HashMap<String, RequestBody> map = new HashMap<>();
+        RequestBody body = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+        map.put("file\"; filename=\"" + file.getName(), body);
+
+        return verifyResponse(wrapper.createMedia(map, params).execute());
     }
 
     public void createMedia(Media media, File file, Callback<Media> callback) throws RequestException {
 
         if (media.getGroupId() == null)
             throw new IllegalArgumentException("Group Id is required");
-        if (media.getMimeType() == null)
-            throw new IllegalArgumentException("Mime Type is required");
 
-        HashMap<String, String> params = new HashMap<String, String>();
+        HashMap<String, String> params = new HashMap<>();
+        params.put("group_id", media.getGroupId());
         params.put("shared", media.isShared() ? "true" : "false");
         if (media.getStartDate() != null) {
             SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
@@ -107,7 +111,11 @@ public class MediaService extends BaseService<MediaInterface> {
             params.put("description", media.getTags());
         }
 
-        wrapper.createMedia(media.getGroupId(), file.getName(), new TypedFile(media.getMimeType(), file), params, callback);
+        HashMap<String, RequestBody> map = new HashMap<>();
+        RequestBody body = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+        map.put("file\"; filename=\"" + file.getName(), body);
+
+        wrapper.createMedia(map, params).enqueue(callback);
     }
 
     public static class Builder extends BaseService.Builder {

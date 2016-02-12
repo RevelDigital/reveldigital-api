@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015. Catalyst LLC. All right reserved.
+ * Copyright (c) 2016. Catalyst LLC. All right reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -56,12 +56,11 @@ public class MediaServiceTest {
     @Test
     public void testCreateMedia() throws Exception {
         Media media = new Media();
-        media.setGroupId("UqbsxpALaRY"); // required
-        media.setMimeType("image/png"); // required
+        media.setGroupId("IdVYUkPXmTs"); // required
         media.setEndDate(new Date());
         media.setTags("testing");
 
-        Media ret = service.createMedia(media, new File("C:\\REVEL\\Media\\revel-logo.png"));
-        assertTrue(ret.getName().equals("revel-logo.png"));
+        Media ret = service.createMedia(media, new File("C:\\REVEL\\Media\\262419!Logo.png"));
+        assertTrue(ret.getName().equals("262419!Logo.png"));
     }
 }

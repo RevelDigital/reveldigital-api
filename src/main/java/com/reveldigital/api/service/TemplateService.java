@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015. Catalyst LLC. All right reserved.
+ * Copyright (c) 2016. Catalyst LLC. All right reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,8 +19,9 @@ package com.reveldigital.api.service;
 import com.reveldigital.api.RequestException;
 import com.reveldigital.api.Template;
 import com.reveldigital.api.service.retrofit.TemplateInterface;
-import retrofit.Callback;
+import retrofit2.Callback;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -28,20 +29,20 @@ import java.util.List;
  */
 public class TemplateService extends BaseService<TemplateInterface> {
 
-    public List<Template> getTemplates() throws RequestException {
-        return wrapper.getTemplates();
+    public List<Template> getTemplates() throws RequestException, IOException {
+        return verifyResponse(wrapper.getTemplates().execute());
     }
 
     public void getTemplates(Callback<List<Template>> callback) throws RequestException {
-        wrapper.getTemplates(callback);
+        wrapper.getTemplates().enqueue(callback);
     }
 
-    public Template getTemplate(String id) throws RequestException {
-        return wrapper.getTemplate(id);
+    public Template getTemplate(String id) throws RequestException, IOException {
+        return verifyResponse(wrapper.getTemplate(id).execute());
     }
 
     public void getTemplate(String id, Callback<Template> callback) throws RequestException {
-        wrapper.getTemplate(id, callback);
+        wrapper.getTemplate(id).enqueue(callback);
     }
 
     public static class Builder extends BaseService.Builder {

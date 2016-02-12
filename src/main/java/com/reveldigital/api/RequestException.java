@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015. Catalyst LLC. All right reserved.
+ * Copyright (c) 2016. Catalyst LLC. All right reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,6 +24,10 @@ public class RequestException extends Exception {
     public final String statusMessage;
     public final int statusCode;
 
+    public RequestException(Exception e) {
+        this.statusCode = 0;
+        this.statusMessage = e.getMessage();
+    }
     public RequestException(int statusCode, String statusMessage) {
         this.statusCode = statusCode;
         this.statusMessage = statusMessage;

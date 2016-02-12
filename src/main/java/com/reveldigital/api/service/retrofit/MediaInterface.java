@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015. Catalyst LLC. All right reserved.
+ * Copyright (c) 2016. Catalyst LLC. All right reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,9 +18,9 @@ package com.reveldigital.api.service.retrofit;
 
 import com.reveldigital.api.Media;
 import com.reveldigital.api.RequestException;
-import retrofit.Callback;
-import retrofit.http.*;
-import retrofit.mime.TypedFile;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.http.*;
 
 import java.util.List;
 import java.util.Map;
@@ -33,22 +33,16 @@ import static com.reveldigital.api.IConstants.SEGMENT_MEDIA;
 public interface MediaInterface {
 
     @GET(SEGMENT_MEDIA)
-    List<Media> getMedias() throws RequestException;
-
-    @GET(SEGMENT_MEDIA)
-    void getMedias(Callback<List<Media>> callback) throws RequestException;
+    Call<List<Media>> getMedias() throws RequestException;
 
     @GET(SEGMENT_MEDIA + "/{id}")
-    Media getMedia(@Path("id") String id) throws RequestException;
+    Call<Media> getMedia(@Path("id") String id) throws RequestException;
+//
+//    @POST(SEGMENT_MEDIA + "/{group_id}/{file_name}")
+//    Call<Media> createMedia(@Path("group_id") String groupId, @Path("file_name") String fileName, @Body RequestBody file,
+//                            @QueryMap Map<String, String> params) throws RequestException;
 
-    @GET(SEGMENT_MEDIA + "/{id}")
-    void getMedia(@Path("id") String id, Callback<Media> callback) throws RequestException;
-
-    @POST(SEGMENT_MEDIA + "/{group_id}/{file_name}")
-    Media createMedia(@Path("group_id") String groupId, @Path("file_name") String fileName, @Body TypedFile file,
-                      @QueryMap Map<String, String> params) throws RequestException;
-
-    @POST(SEGMENT_MEDIA + "/{group_id}/{file_name}")
-    void createMedia(@Path("group_id") String groupId, @Path("file_name") String fileName, @Body TypedFile file,
-                     @QueryMap Map<String, String> params, Callback<Media> callback) throws RequestException;
+    @Multipart
+    @POST(SEGMENT_MEDIA)
+    Call<Media> createMedia(@PartMap Map<String, RequestBody> media, @QueryMap Map<String, String> params) throws RequestException;
 }

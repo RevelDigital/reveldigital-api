@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015. Catalyst LLC. All right reserved.
+ * Copyright (c) 2016. Catalyst LLC. All right reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,9 +18,9 @@ package com.reveldigital.api.service.retrofit;
 
 import com.reveldigital.api.Playlist;
 import com.reveldigital.api.RequestException;
-import retrofit.Callback;
-import retrofit.http.GET;
-import retrofit.http.Path;
+import retrofit2.Call;
+import retrofit2.http.GET;
+import retrofit2.http.Path;
 
 import java.util.List;
 
@@ -32,14 +32,8 @@ import static com.reveldigital.api.IConstants.SEGMENT_PLAYLISTS;
 public interface PlaylistInterface {
 
     @GET(SEGMENT_PLAYLISTS)
-    List<Playlist> getPlaylists() throws RequestException;
-
-    @GET(SEGMENT_PLAYLISTS)
-    void getPlaylists(Callback<List<Playlist>> callback) throws RequestException;
+    Call<List<Playlist>> getPlaylists() throws RequestException;
 
     @GET(SEGMENT_PLAYLISTS + "/{id}")
-    Playlist getPlaylist(@Path("id") String id) throws RequestException;
-
-    @GET(SEGMENT_PLAYLISTS + "/{id}")
-    void getPlaylist(@Path("id") String id, Callback<Playlist> callback) throws RequestException;
+    Call<Playlist> getPlaylist(@Path("id") String id) throws RequestException;
 }
