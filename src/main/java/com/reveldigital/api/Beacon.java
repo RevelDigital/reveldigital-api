@@ -41,6 +41,8 @@ public class Beacon implements Serializable {
     private String minor;
     @SerializedName("notification_delay")
     private int notificationDelay;
+    @SerializedName("instance_id")
+    private String instanceId;
 
     public double getDistance() {
         return distance;
@@ -86,6 +88,10 @@ public class Beacon implements Serializable {
         return notificationDelay;
     }
 
+    public String getInstanceId() {
+        return instanceId;
+    }
+
     public Beacon setDistance(double distance) {
         this.distance = distance;
         return this;
@@ -116,12 +122,6 @@ public class Beacon implements Serializable {
         return this;
     }
 
-    /**
-     * List of device Ids to correspond with this beacon
-     *
-     * @param devices
-     * @return
-     */
     public Beacon setDevices(List<String> devices) {
         this.devices = devices;
         return this;
@@ -144,6 +144,11 @@ public class Beacon implements Serializable {
 
     public Beacon setNotificationDelay(int notificationDelay) {
         this.notificationDelay = notificationDelay;
+        return this;
+    }
+
+    public Beacon setInstanceId(String instanceId) {
+        this.instanceId = instanceId;
         return this;
     }
 }

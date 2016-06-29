@@ -98,7 +98,7 @@ public abstract class BaseService<T> {
     }
 
     protected static <T> T verifyResponse(Response<T> response) throws RequestException {
-        if (response != null && !response.isSuccess() && response.errorBody() != null) {
+        if (response != null && !response.isSuccessful() && response.errorBody() != null) {
             Converter<ResponseBody, RequestError> converter =
                     retrofit.responseBodyConverter(RequestError.class, new Annotation[0]);
 
