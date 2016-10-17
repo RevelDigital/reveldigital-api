@@ -43,6 +43,7 @@ public class Beacon implements Serializable {
     private int notificationDelay;
     @SerializedName("instance_id")
     private String instanceId;
+    private String namespace;
 
     public double getDistance() {
         return distance;
@@ -90,6 +91,10 @@ public class Beacon implements Serializable {
 
     public String getInstanceId() {
         return instanceId;
+    }
+
+    public String getNamespace() {
+        return namespace;
     }
 
     public Beacon setDistance(double distance) {
@@ -149,6 +154,11 @@ public class Beacon implements Serializable {
 
     public Beacon setInstanceId(String instanceId) {
         this.instanceId = instanceId;
+        return this;
+    }
+
+    public Beacon getNamespace(String namespace) {
+        this.namespace = namespace;
         return this;
     }
 }
