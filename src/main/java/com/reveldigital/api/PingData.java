@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015. Catalyst LLC. All right reserved.
+ * Copyright (c) 2016. Catalyst LLC. All right reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@ package com.reveldigital.api;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Created by Mike on 6/4/2014.
@@ -36,6 +37,9 @@ public class PingData implements Serializable {
     @SerializedName("mac_address")
     private String macAddress;
     private byte[] snap;
+    @SerializedName("ip_address")
+    private String ipAddress;
+    private Date timestamp;
 
     public String getPlayerVersion() {
         return playerVersion;
@@ -59,5 +63,13 @@ public class PingData implements Serializable {
 
     public byte[] getSnap() {
         return snap;
+    }
+
+    public String getIpAddress() {
+        return ipAddress;
+    }
+
+    public Date getTimestamp() {
+        return timestamp;
     }
 }

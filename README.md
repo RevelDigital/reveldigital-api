@@ -20,7 +20,7 @@ To use the package, you need to use following Maven dependency:
 <dependency>
   <groupId>com.reveldigital</groupId>
   <artifactId>reveldigital-api</artifactId>
-  <version>1.4.10</version>
+  <version>1.4.14</version>
 </dependency>
 ```
 

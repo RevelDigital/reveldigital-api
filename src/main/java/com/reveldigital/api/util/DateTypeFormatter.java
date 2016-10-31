@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015. Catalyst LLC. All right reserved.
+ * Copyright (c) 2016. Catalyst LLC. All right reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,11 +17,12 @@
 package com.reveldigital.api.util;
 
 import com.google.gson.*;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.format.DateTimeFormatterBuilder;
+import org.joda.time.format.ISODateTimeFormat;
 
 import java.lang.reflect.Type;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -34,28 +35,29 @@ public class DateTypeFormatter implements JsonDeserializer<Date>,
     private final String DATE_ONLY_FORMAT = "yyyy-MM-dd"; //$NON-NLS-1$
     private final String TIME_ONLY_FORMAT = "HH:mm:ss"; //$NON-NLS-1$
 
-    private final DateFormat[] formats;
+    private final DateTimeFormatter[] formats;
 
     /**
      * Create date formatter
      */
     public DateTypeFormatter() {
-        formats = new DateFormat[3];
-        formats[0] = new SimpleDateFormat(DATE_TIME_FORMAT);
-        formats[1] = new SimpleDateFormat(DATE_ONLY_FORMAT);
-        formats[2] = new SimpleDateFormat(TIME_ONLY_FORMAT);
+        formats = new DateTimeFormatter[4];
+        formats[0] = ISODateTimeFormat.dateTime(); //.withZone(DateTimeZone.UTC);
+        formats[1] = new DateTimeFormatterBuilder().appendPattern(DATE_TIME_FORMAT).toFormatter();
+        formats[2] = new DateTimeFormatterBuilder().appendPattern(DATE_ONLY_FORMAT).toFormatter();
+        formats[3] = new DateTimeFormatterBuilder().appendPattern(TIME_ONLY_FORMAT).toFormatter();
     }
 
     public Date deserialize(JsonElement json, Type typeOfT,
                             JsonDeserializationContext context) throws JsonParseException {
         JsonParseException exception = null;
         final String value = json.getAsString();
-        for (DateFormat format : formats)
+        for (DateTimeFormatter format : formats)
             try {
                 synchronized (format) {
-                    return format.parse(value);
+                    return format.parseDateTime(value).toDate();
                 }
-            } catch (ParseException e) {
+            } catch (IllegalArgumentException e) {
                 exception = new JsonParseException(e);
             }
         throw exception;
@@ -63,10 +65,10 @@ public class DateTypeFormatter implements JsonDeserializer<Date>,
 
     public JsonElement serialize(Date date, Type type,
                                  JsonSerializationContext context) {
-        final DateFormat primary = formats[0];
+        final DateTimeFormatter primary = formats[0];
         String formatted;
         synchronized (primary) {
-            formatted = primary.format(date);
+            formatted = primary.print(new DateTime(date));
         }
         return new JsonPrimitive(formatted);
     }
