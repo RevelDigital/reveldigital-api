@@ -57,6 +57,6 @@ List<Device> devices = service.getDevices();
 
 # License
 
-Copyright (c) 2014 Mike Tinnes
+Copyright (c) 2016 Mike Tinnes
 
 Licensed under the Apache License, Version 2.0: http://www.apache.org/licenses/LICENSE-2.0
