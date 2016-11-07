@@ -55,6 +55,10 @@ DeviceService service = new DeviceService.Builder()
 List<Device> devices = service.getDevices();
 ```
 
+## Documentation
+
+[https://reveldigital.github.io/reveldigital-api/javadoc/index.html](https://reveldigital.github.io/reveldigital-api/javadoc/index.html)
+
 # License
 
 Copyright (c) 2016 Mike Tinnes
