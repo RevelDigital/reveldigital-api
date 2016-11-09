@@ -17,6 +17,7 @@
 package com.reveldigital.api.test;
 
 import com.reveldigital.api.Command;
+import com.reveldigital.api.CommandSet;
 import com.reveldigital.api.Device;
 import com.reveldigital.api.service.DeviceService;
 import org.junit.Before;
@@ -63,6 +64,12 @@ public class DeviceServiceTest {
     @Test
     public void testPostCommands() throws Exception {
         service.postCommands("1Xrq-E6H7U8", Arrays.asList(new Command().setName("abc").setArg("def")));
+    }
+
+    @Test
+    public void testPostCommandSets() throws Exception {
+        service.postCommands(Arrays.asList(new CommandSet().setDeviceId("KGnhx4D6uxk").setCommands(
+                Arrays.asList(new Command().setName("abc").setArg("def")))));
     }
 
     @Test

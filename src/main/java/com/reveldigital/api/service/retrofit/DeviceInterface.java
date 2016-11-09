@@ -17,6 +17,7 @@
 package com.reveldigital.api.service.retrofit;
 
 import com.reveldigital.api.Command;
+import com.reveldigital.api.CommandSet;
 import com.reveldigital.api.Device;
 import com.reveldigital.api.RequestException;
 import okhttp3.ResponseBody;
@@ -46,4 +47,7 @@ public interface DeviceInterface {
 
     @POST(SEGMENT_DEVICES + "/{id}/commands")
     Call<ResponseBody> postCommands(@Path("id") String id, @Body List<Command> commands) throws RequestException;
+
+    @POST(SEGMENT_DEVICES + "/commands")
+    Call<ResponseBody> postCommands(@Body List<CommandSet> commandSets) throws RequestException;
 }

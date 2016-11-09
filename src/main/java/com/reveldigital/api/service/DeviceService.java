@@ -17,6 +17,7 @@
 package com.reveldigital.api.service;
 
 import com.reveldigital.api.Command;
+import com.reveldigital.api.CommandSet;
 import com.reveldigital.api.Device;
 import com.reveldigital.api.RequestException;
 import com.reveldigital.api.service.retrofit.DeviceInterface;
@@ -77,6 +78,14 @@ public class DeviceService extends BaseService<DeviceInterface> {
 
     public void postCommands(String id, List<Command> commands, Callback<ResponseBody> callback) throws RequestException {
         wrapper.postCommands(id, commands).enqueue(callback);
+    }
+
+    public void postCommands(List<CommandSet> commandSets) throws RequestException, IOException {
+        verifyResponse(wrapper.postCommands(commandSets).execute());
+    }
+
+    public void postCommands(List<CommandSet> commandSets, Callback<ResponseBody> callback) throws RequestException {
+        wrapper.postCommands(commandSets).enqueue(callback);
     }
 
     public static class Builder extends BaseService.Builder {
