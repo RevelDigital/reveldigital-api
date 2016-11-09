@@ -20,14 +20,14 @@ To use the package, you need to use following Maven dependency:
 <dependency>
   <groupId>com.reveldigital</groupId>
   <artifactId>reveldigital-api</artifactId>
-  <version>1.4.14</version>
+  <version>1.4.15</version>
 </dependency>
 ```
 
 or Gradle:
 
 ```groovy
-compile 'com.reveldigital:reveldigital-api:1.4.14'
+compile 'com.reveldigital:reveldigital-api:1.4.15'
 ```
 
 or download jars from Maven repository.
