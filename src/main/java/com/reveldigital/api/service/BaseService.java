@@ -50,6 +50,7 @@ public abstract class BaseService<T> {
     public abstract static class Builder {
 
         private String apiKey;
+        private boolean rebuild = false;
 
         public String getApiKey() {
             return apiKey;
@@ -57,14 +58,16 @@ public abstract class BaseService<T> {
 
         public Builder setApiKey(String apiKey) {
             this.apiKey = apiKey;
+            this.rebuild = true;
+
             return this;
         }
 
         public abstract <T> T build();
 
-        public <T> T build(Class<T> type) {
+        public synchronized <T> T build(Class<T> type) {
 
-            if (retrofit == null) {
+            if (rebuild || retrofit == null) {
                 GsonBuilder gsonBuilder = new GsonBuilder();
                 gsonBuilder.registerTypeAdapter(Date.class, new DateTypeFormatter());
                 gsonBuilder.registerTypeHierarchyAdapter(byte[].class,
@@ -97,7 +100,7 @@ public abstract class BaseService<T> {
         }
     }
 
-    protected static <T> T verifyResponse(Response<T> response) throws RequestException {
+    protected synchronized static <T> T verifyResponse(Response<T> response) throws RequestException {
         if (response != null && !response.isSuccessful() && response.errorBody() != null) {
             Converter<ResponseBody, RequestError> converter =
                     retrofit.responseBodyConverter(RequestError.class, new Annotation[0]);
