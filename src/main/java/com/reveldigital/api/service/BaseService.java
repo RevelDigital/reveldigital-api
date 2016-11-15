@@ -50,7 +50,6 @@ public abstract class BaseService<T> {
     public abstract static class Builder {
 
         private String apiKey;
-        private boolean rebuild = false;
 
         public String getApiKey() {
             return apiKey;
@@ -58,7 +57,6 @@ public abstract class BaseService<T> {
 
         public Builder setApiKey(String apiKey) {
             this.apiKey = apiKey;
-            this.rebuild = true;
 
             return this;
         }
@@ -67,34 +65,31 @@ public abstract class BaseService<T> {
 
         public synchronized <T> T build(Class<T> type) {
 
-            if (rebuild || retrofit == null) {
-                GsonBuilder gsonBuilder = new GsonBuilder();
-                gsonBuilder.registerTypeAdapter(Date.class, new DateTypeFormatter());
-                gsonBuilder.registerTypeHierarchyAdapter(byte[].class,
-                        new ByteArrayTypeAdapter());
-                gsonBuilder.setFieldNamingPolicy(LOWER_CASE_WITH_UNDERSCORES);
+            GsonBuilder gsonBuilder = new GsonBuilder();
+            gsonBuilder.registerTypeAdapter(Date.class, new DateTypeFormatter());
+            gsonBuilder.registerTypeHierarchyAdapter(byte[].class,
+                    new ByteArrayTypeAdapter());
+            gsonBuilder.setFieldNamingPolicy(LOWER_CASE_WITH_UNDERSCORES);
 
-                OkHttpClient httpClient = new OkHttpClient.Builder()
-                        .readTimeout(60, TimeUnit.SECONDS)
-                        .writeTimeout(60, TimeUnit.SECONDS)
-                        .addInterceptor(new Interceptor() {
-                            @Override
-                            public okhttp3.Response intercept(Interceptor.Chain chain) throws IOException {
-                                Request original = chain.request();
-                                Request request = original.newBuilder()
-                                        .url(original.url().newBuilder().addQueryParameter("api_key", getApiKey()).build())
-                                        .method(original.method(), original.body())
-                                        .build();
-                                return chain.proceed(request);
-                            }
-                        }).build();
+            OkHttpClient httpClient = new OkHttpClient.Builder()
+                    .readTimeout(60, TimeUnit.SECONDS)
+                    .writeTimeout(60, TimeUnit.SECONDS)
+                    .addInterceptor(new Interceptor() {
+                        @Override
+                        public okhttp3.Response intercept(Interceptor.Chain chain) throws IOException {
+                            Request original = chain.request();
+                            Request request = original.newBuilder()
+                                    .url(original.url().newBuilder().addQueryParameter("api_key", getApiKey()).build())
+                                    .build();
+                            return chain.proceed(request);
+                        }
+                    }).build();
 
-                retrofit = new Retrofit.Builder()
-                        .baseUrl(URL_API)
-                        .addConverterFactory(GsonConverterFactory.create(gsonBuilder.create()))
-                        .client(httpClient)
-                        .build();
-            }
+            retrofit = new Retrofit.Builder()
+                    .baseUrl(URL_API)
+                    .addConverterFactory(GsonConverterFactory.create(gsonBuilder.create()))
+                    .client(httpClient)
+                    .build();
 
             return retrofit.create(type);
         }
