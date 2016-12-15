@@ -16,6 +16,7 @@
 
 package com.reveldigital.api.test;
 
+import com.reveldigital.api.Group;
 import com.reveldigital.api.Playlist;
 import com.reveldigital.api.service.PlaylistService;
 import org.junit.Before;
@@ -49,5 +50,11 @@ public class PlaylistServiceTest {
     public void testGetPlaylist() throws Exception {
         Playlist ret = service.getPlaylist("ORryJsvz8FU");
         assertTrue(ret.getName().equals("command_test_playlist"));
+    }
+
+    @Test
+    public void testGetGroups() throws Exception {
+        List<Group> groups = service.getGroups();
+        assertTrue(groups.size() > 0);
     }
 }

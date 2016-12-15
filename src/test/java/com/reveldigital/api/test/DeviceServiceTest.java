@@ -19,6 +19,7 @@ package com.reveldigital.api.test;
 import com.reveldigital.api.Command;
 import com.reveldigital.api.CommandSet;
 import com.reveldigital.api.Device;
+import com.reveldigital.api.Group;
 import com.reveldigital.api.service.DeviceService;
 import org.junit.Before;
 import org.junit.Test;
@@ -59,6 +60,12 @@ public class DeviceServiceTest {
     public void testGetDevice() throws Exception {
         Device device = service.getDevice("1Xrq-E6H7U8");
         assertTrue(device.getName().equals("Internal Dev"));
+    }
+
+    @Test
+    public void testGetGroups() throws Exception {
+        List<Group> groups = service.getGroups();
+        assertTrue(groups.size() > 0);
     }
 
     @Test

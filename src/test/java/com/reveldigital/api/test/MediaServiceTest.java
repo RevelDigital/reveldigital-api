@@ -16,6 +16,7 @@
 
 package com.reveldigital.api.test;
 
+import com.reveldigital.api.Group;
 import com.reveldigital.api.Media;
 import com.reveldigital.api.service.MediaService;
 import org.junit.Before;
@@ -51,6 +52,12 @@ public class MediaServiceTest {
     public void testGetMedia() throws Exception {
         Media ret = service.getMedia("DFXYHYOESbA");
         assertTrue(ret.getName().equals("Menu 1 Template - Overlay"));
+    }
+
+    @Test
+    public void testGetGroups() throws Exception {
+        List<Group> groups = service.getGroups();
+        assertTrue(groups.size() > 0);
     }
 
     @Test

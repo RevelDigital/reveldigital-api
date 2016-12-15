@@ -16,6 +16,7 @@
 
 package com.reveldigital.api.service.retrofit;
 
+import com.reveldigital.api.Group;
 import com.reveldigital.api.Playlist;
 import com.reveldigital.api.RequestException;
 import retrofit2.Call;
@@ -24,6 +25,7 @@ import retrofit2.http.Path;
 
 import java.util.List;
 
+import static com.reveldigital.api.IConstants.SEGMENT_MEDIA;
 import static com.reveldigital.api.IConstants.SEGMENT_PLAYLISTS;
 
 /**
@@ -36,4 +38,7 @@ public interface PlaylistInterface {
 
     @GET(SEGMENT_PLAYLISTS + "/{id}")
     Call<Playlist> getPlaylist(@Path("id") String id) throws RequestException;
+
+    @GET(SEGMENT_PLAYLISTS + "/groups")
+    Call<List<Group>> getGroups() throws RequestException;
 }

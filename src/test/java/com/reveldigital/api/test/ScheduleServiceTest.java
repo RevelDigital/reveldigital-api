@@ -16,6 +16,7 @@
 
 package com.reveldigital.api.test;
 
+import com.reveldigital.api.Group;
 import com.reveldigital.api.Schedule;
 import com.reveldigital.api.service.ScheduleService;
 import org.junit.Before;
@@ -49,5 +50,11 @@ public class ScheduleServiceTest {
     public void testGetSchedule() throws Exception {
         Schedule ret = service.getSchedule("qIQ-2l5brWw");
         assertTrue(ret.getName().equals("Internal"));
+    }
+
+    @Test
+    public void testGetGroups() throws Exception {
+        List<Group> groups = service.getGroups();
+        assertTrue(groups.size() > 0);
     }
 }

@@ -16,6 +16,7 @@
 
 package com.reveldigital.api.service.retrofit;
 
+import com.reveldigital.api.Group;
 import com.reveldigital.api.RequestException;
 import com.reveldigital.api.Template;
 import retrofit2.Call;
@@ -24,6 +25,7 @@ import retrofit2.http.Path;
 
 import java.util.List;
 
+import static com.reveldigital.api.IConstants.SEGMENT_SCHEDULES;
 import static com.reveldigital.api.IConstants.SEGMENT_TEMPLATES;
 
 /**
@@ -36,4 +38,7 @@ public interface TemplateInterface {
 
     @GET(SEGMENT_TEMPLATES + "/{id}")
     Call<Template> getTemplate(@Path("id") String id) throws RequestException;
+
+    @GET(SEGMENT_TEMPLATES + "/groups")
+    Call<List<Group>> getGroups() throws RequestException;
 }

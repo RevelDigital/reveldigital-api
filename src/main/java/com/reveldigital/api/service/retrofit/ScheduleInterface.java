@@ -16,6 +16,7 @@
 
 package com.reveldigital.api.service.retrofit;
 
+import com.reveldigital.api.Group;
 import com.reveldigital.api.RequestException;
 import com.reveldigital.api.Schedule;
 import retrofit2.Call;
@@ -24,6 +25,7 @@ import retrofit2.http.Path;
 
 import java.util.List;
 
+import static com.reveldigital.api.IConstants.SEGMENT_PLAYLISTS;
 import static com.reveldigital.api.IConstants.SEGMENT_SCHEDULES;
 
 /**
@@ -36,4 +38,7 @@ public interface ScheduleInterface {
 
     @GET(SEGMENT_SCHEDULES + "/{id}")
     Call<Schedule> getSchedule(@Path("id") String id) throws RequestException;
+
+    @GET(SEGMENT_SCHEDULES + "/groups")
+    Call<List<Group>> getGroups() throws RequestException;
 }

@@ -16,10 +16,7 @@
 
 package com.reveldigital.api.service.retrofit;
 
-import com.reveldigital.api.Command;
-import com.reveldigital.api.CommandSet;
-import com.reveldigital.api.Device;
-import com.reveldigital.api.RequestException;
+import com.reveldigital.api.*;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.*;
@@ -39,6 +36,9 @@ public interface DeviceInterface {
     @GET(SEGMENT_DEVICES + "/{id}")
     Call<Device> getDevice(@Path("id") String id) throws RequestException;
 
+    @GET(SEGMENT_DEVICES + "/groups")
+    Call<List<Group>> getGroups() throws RequestException;
+
     @PUT(SEGMENT_DEVICES + "/{id}")
     Call<Device> updateDevice(@Path("id") String id, @Body Device device) throws RequestException;
 
@@ -50,4 +50,5 @@ public interface DeviceInterface {
 
     @POST(SEGMENT_DEVICES + "/commands")
     Call<ResponseBody> postCommands(@Body List<CommandSet> commandSets) throws RequestException;
+
 }

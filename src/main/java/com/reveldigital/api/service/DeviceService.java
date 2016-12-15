@@ -16,10 +16,7 @@
 
 package com.reveldigital.api.service;
 
-import com.reveldigital.api.Command;
-import com.reveldigital.api.CommandSet;
-import com.reveldigital.api.Device;
-import com.reveldigital.api.RequestException;
+import com.reveldigital.api.*;
 import com.reveldigital.api.service.retrofit.DeviceInterface;
 import okhttp3.ResponseBody;
 import retrofit2.Callback;
@@ -54,6 +51,14 @@ public class DeviceService extends BaseService<DeviceInterface> {
 
     public void getDevice(String id, Callback<Device> callback) throws RequestException {
         wrapper.getDevice(id).enqueue(callback);
+    }
+
+    public List<Group> getGroups() throws RequestException, IOException {
+        return verifyResponse(wrapper.getGroups().execute());
+    }
+
+    public void getGroups(Callback<List<Group>> callback) throws RequestException {
+        wrapper.getGroups().enqueue(callback);
     }
 
     public Device updateDevice(Device device) throws RequestException, IOException {

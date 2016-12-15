@@ -16,6 +16,7 @@
 
 package com.reveldigital.api.service;
 
+import com.reveldigital.api.Group;
 import com.reveldigital.api.RequestException;
 import com.reveldigital.api.Schedule;
 import com.reveldigital.api.service.retrofit.ScheduleInterface;
@@ -43,6 +44,14 @@ public class ScheduleService extends BaseService<ScheduleInterface> {
 
     public void getSchedule(String id, Callback<Schedule> callback) throws RequestException {
         wrapper.getSchedule(id).enqueue(callback);
+    }
+
+    public List<Group> getGroups() throws RequestException, IOException {
+        return verifyResponse(wrapper.getGroups().execute());
+    }
+
+    public void getGroups(Callback<List<Group>> callback) throws RequestException {
+        wrapper.getGroups().enqueue(callback);
     }
 
     public static class Builder extends BaseService.Builder {

@@ -16,6 +16,7 @@
 
 package com.reveldigital.api.service;
 
+import com.reveldigital.api.Group;
 import com.reveldigital.api.Media;
 import com.reveldigital.api.RequestException;
 import com.reveldigital.api.service.retrofit.MediaInterface;
@@ -50,6 +51,14 @@ public class MediaService extends BaseService<MediaInterface> {
 
     public void getMedia(String id, Callback<Media> callback) throws RequestException {
         wrapper.getMedia(id).enqueue(callback);
+    }
+
+    public List<Group> getGroups() throws RequestException, IOException {
+        return verifyResponse(wrapper.getGroups().execute());
+    }
+
+    public void getGroups(Callback<List<Group>> callback) throws RequestException {
+        wrapper.getGroups().enqueue(callback);
     }
 
     public Media createMedia(Media media, File file) throws RequestException, IOException {

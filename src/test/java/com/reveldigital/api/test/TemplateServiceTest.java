@@ -16,6 +16,7 @@
 
 package com.reveldigital.api.test;
 
+import com.reveldigital.api.Group;
 import com.reveldigital.api.Template;
 import com.reveldigital.api.service.TemplateService;
 import org.junit.Before;
@@ -49,5 +50,11 @@ public class TemplateServiceTest {
     public void testGetTemplate() throws Exception {
         Template ret = service.getTemplate("G0IrSYzbjJA");
         assertTrue(ret.getName().equals("HudsonsCoffee"));
+    }
+
+    @Test
+    public void testGetGroups() throws Exception {
+        List<Group> groups = service.getGroups();
+        assertTrue(groups.size() > 0);
     }
 }

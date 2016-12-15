@@ -16,6 +16,7 @@
 
 package com.reveldigital.api.service;
 
+import com.reveldigital.api.Group;
 import com.reveldigital.api.RequestException;
 import com.reveldigital.api.Template;
 import com.reveldigital.api.service.retrofit.TemplateInterface;
@@ -43,6 +44,14 @@ public class TemplateService extends BaseService<TemplateInterface> {
 
     public void getTemplate(String id, Callback<Template> callback) throws RequestException {
         wrapper.getTemplate(id).enqueue(callback);
+    }
+
+    public List<Group> getGroups() throws RequestException, IOException {
+        return verifyResponse(wrapper.getGroups().execute());
+    }
+
+    public void getGroups(Callback<List<Group>> callback) throws RequestException {
+        wrapper.getGroups().enqueue(callback);
     }
 
     public static class Builder extends BaseService.Builder {

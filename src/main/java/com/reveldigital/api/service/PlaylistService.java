@@ -16,6 +16,7 @@
 
 package com.reveldigital.api.service;
 
+import com.reveldigital.api.Group;
 import com.reveldigital.api.Playlist;
 import com.reveldigital.api.RequestException;
 import com.reveldigital.api.service.retrofit.PlaylistInterface;
@@ -43,6 +44,14 @@ public class PlaylistService extends BaseService<PlaylistInterface> {
 
     public void getPlaylist(String id, Callback<Playlist> callback) throws RequestException {
         wrapper.getPlaylist(id).enqueue(callback);
+    }
+
+    public List<Group> getGroups() throws RequestException, IOException {
+        return verifyResponse(wrapper.getGroups().execute());
+    }
+
+    public void getGroups(Callback<List<Group>> callback) throws RequestException {
+        wrapper.getGroups().enqueue(callback);
     }
 
     public static class Builder extends BaseService.Builder {

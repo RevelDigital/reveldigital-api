@@ -16,6 +16,7 @@
 
 package com.reveldigital.api.service.retrofit;
 
+import com.reveldigital.api.Group;
 import com.reveldigital.api.Media;
 import com.reveldigital.api.RequestException;
 import okhttp3.RequestBody;
@@ -25,6 +26,7 @@ import retrofit2.http.*;
 import java.util.List;
 import java.util.Map;
 
+import static com.reveldigital.api.IConstants.SEGMENT_DEVICES;
 import static com.reveldigital.api.IConstants.SEGMENT_MEDIA;
 
 /**
@@ -37,6 +39,10 @@ public interface MediaInterface {
 
     @GET(SEGMENT_MEDIA + "/{id}")
     Call<Media> getMedia(@Path("id") String id) throws RequestException;
+
+    @GET(SEGMENT_MEDIA + "/groups")
+    Call<List<Group>> getGroups() throws RequestException;
+
 //
 //    @POST(SEGMENT_MEDIA + "/{group_id}/{file_name}")
 //    Call<Media> createMedia(@Path("group_id") String groupId, @Path("file_name") String fileName, @Body RequestBody file,
