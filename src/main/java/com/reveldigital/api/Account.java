@@ -47,6 +47,7 @@ public class Account implements Serializable {
     @SerializedName("created_on")
     private Date createdOn;
     private String timezone;
+    private String tags;
 
     public String getName() {
         return name;
@@ -103,6 +104,8 @@ public class Account implements Serializable {
     public String getTimezone() {
         return timezone;
     }
+
+    public String getTags() { return tags; }
 
     public Account setName(String name) {
         this.name = name;
@@ -166,6 +169,11 @@ public class Account implements Serializable {
 
     public Account setTimezone(String timezone) {
         this.timezone = timezone;
+        return this;
+    }
+
+    public Account setTags(String tags) {
+        this.tags = tags;
         return this;
     }
 }
