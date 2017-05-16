@@ -19,11 +19,14 @@ package com.reveldigital.api.test;
 /**
  * Created by Mike on 6/6/2014.
  */
-public interface IConstants {
+public class IConstants {
 
+    static {
+        API_KEY = System.getProperty("API_KEY");
+    }
     /**
      * Generate your API key by logging into www.reveldigital.com
      * Click Account > Account Information > Generate New API Key
      */
-    String API_KEY = "";
+    public static String API_KEY = "";
 }
