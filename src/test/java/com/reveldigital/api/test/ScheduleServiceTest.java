@@ -48,7 +48,7 @@ public class ScheduleServiceTest {
 
     @Test
     public void testGetSchedule() throws Exception {
-        Schedule ret = service.getSchedule("qIQ-2l5brWw");
+        Schedule ret = service.getSchedule("EZpttA6X0s9Ng9fzq5igIg");
         assertTrue(ret.getName().equals("Internal"));
     }
 

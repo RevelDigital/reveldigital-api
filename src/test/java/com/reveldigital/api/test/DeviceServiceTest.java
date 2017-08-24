@@ -21,6 +21,7 @@ import com.reveldigital.api.CommandSet;
 import com.reveldigital.api.Device;
 import com.reveldigital.api.Group;
 import com.reveldigital.api.service.DeviceService;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -58,8 +59,8 @@ public class DeviceServiceTest {
 
     @Test
     public void testGetDevice() throws Exception {
-        Device device = service.getDevice("1Xrq-E6H7U8");
-        assertTrue(device.getName().equals("Internal Dev"));
+        Device device = service.getDevice("kVlvOGGittV3m2A3hsPJVw");
+        assertTrue(device.getName().equals("RiPi"));
     }
 
     @Test
@@ -70,18 +71,18 @@ public class DeviceServiceTest {
 
     @Test
     public void testPostCommands() throws Exception {
-        service.postCommands("1Xrq-E6H7U8", Arrays.asList(new Command().setName("abc").setArg("def")));
+        service.postCommands("2zm8hLAWdT89IQ9DLTElWw", Arrays.asList(new Command().setName("abc").setArg("def")));
     }
 
     @Test
     public void testPostCommandSets() throws Exception {
-        service.postCommands(Arrays.asList(new CommandSet().setDeviceId("KGnhx4D6uxk").setCommands(
+        service.postCommands(Arrays.asList(new CommandSet().setDeviceId("2zm8hLAWdT89IQ9DLTElWw").setCommands(
                 Arrays.asList(new Command().setName("abc").setArg("def")))));
     }
 
     @Test
     public void testUpdateDevice() throws Exception {
-        Device device = service.getDevice("1Xrq-E6H7U8");
+        Device device = service.getDevice("1isK8nR0Rm64ofWAUmHVdQ");
         device.setTags("ABC");
         device.setLastService(new Date());
         service.updateDevice(device);

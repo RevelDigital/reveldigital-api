@@ -50,8 +50,8 @@ public class MediaServiceTest {
 
     @Test
     public void testGetMedia() throws Exception {
-        Media ret = service.getMedia("DFXYHYOESbA");
-        assertTrue(ret.getName().equals("Menu 1 Template - Overlay"));
+        Media ret = service.getMedia("6QAaqjbg37ueyZI2_oeiww");
+        assertTrue(ret.getName().equals("Blank"));
     }
 
     @Test
