@@ -37,7 +37,7 @@ public interface UserInterface {
     Call<User> getUser(@Path("id") String id) throws RequestException;
 
     @PUT(SEGMENT_USERS + "/{id}")
-    Call<User> updateUser(@Path("id") String id, @Body User user) throws RequestException;
+    Call<Void> updateUser(@Path("id") String id, @Body User user) throws RequestException;
 
     @POST(SEGMENT_USERS)
     Call<User> createUser(@Body User user) throws RequestException;

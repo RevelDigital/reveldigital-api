@@ -37,11 +37,11 @@ public class AccountService extends BaseService<AccountInterface> {
         wrapper.getAccount().enqueue(callback);
     }
 
-    public Account updateAccount(@Body Account account) throws RequestException, IOException {
+    public Void updateAccount(@Body Account account) throws RequestException, IOException {
         return verifyResponse(wrapper.updateAccount(account).execute());
     }
 
-    public void updateAccount(@Body Account account, Callback<Account> callback) throws RequestException {
+    public void updateAccount(@Body Account account, Callback<Void> callback) throws RequestException {
         wrapper.updateAccount(account).enqueue(callback);
     }
 

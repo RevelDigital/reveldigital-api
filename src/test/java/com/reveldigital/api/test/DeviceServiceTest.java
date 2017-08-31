@@ -82,7 +82,7 @@ public class DeviceServiceTest {
 
     @Test
     public void testUpdateDevice() throws Exception {
-        Device device = service.getDevice("1isK8nR0Rm64ofWAUmHVdQ");
+        Device device = service.getDevice("PW1xqhnV40WwR_9DISHl5A");
         device.setTags("ABC");
         device.setLastService(new Date());
         service.updateDevice(device);

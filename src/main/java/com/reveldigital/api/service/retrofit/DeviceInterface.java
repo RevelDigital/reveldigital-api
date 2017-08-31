@@ -40,7 +40,7 @@ public interface DeviceInterface {
     Call<List<Group>> getGroups() throws RequestException;
 
     @PUT(SEGMENT_DEVICES + "/{id}")
-    Call<Device> updateDevice(@Path("id") String id, @Body Device device) throws RequestException;
+    Call<Void> updateDevice(@Path("id") String id, @Body Device device) throws RequestException;
 
     @POST(SEGMENT_DEVICES)
     Call<Device> createDevice(@Query("activation_code") String activationCode, @Body Device device) throws RequestException;

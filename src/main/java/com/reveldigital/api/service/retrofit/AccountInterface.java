@@ -34,5 +34,5 @@ public interface AccountInterface {
     Call<Account> getAccount() throws RequestException;
 
     @PUT(SEGMENT_ACCOUNT)
-    Call<Account> updateAccount(@Body Account account) throws RequestException;
+    Call<Void> updateAccount(@Body Account account) throws RequestException;
 }

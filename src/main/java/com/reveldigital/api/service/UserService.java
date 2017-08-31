@@ -45,11 +45,11 @@ public class UserService extends BaseService<UserInterface> {
         wrapper.getUser(id).enqueue(callback);
     }
 
-    public User updateUser(User user) throws RequestException, IOException {
+    public Void updateUser(User user) throws RequestException, IOException {
         return verifyResponse(wrapper.updateUser(user.getId(), user).execute());
     }
 
-    public void updateUser(User user, Callback<User> callback) throws RequestException {
+    public void updateUser(User user, Callback<Void> callback) throws RequestException {
         wrapper.updateUser(user.getId(), user).enqueue(callback);
     }
 

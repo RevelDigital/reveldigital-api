@@ -61,11 +61,11 @@ public class DeviceService extends BaseService<DeviceInterface> {
         wrapper.getGroups().enqueue(callback);
     }
 
-    public Device updateDevice(Device device) throws RequestException, IOException {
+    public Void updateDevice(Device device) throws RequestException, IOException {
         return verifyResponse(wrapper.updateDevice(device.getId(), device).execute());
     }
 
-    public void updateDevice(Device device, Callback<Device> callback) throws RequestException {
+    public void updateDevice(Device device, Callback<Void> callback) throws RequestException {
         wrapper.updateDevice(device.getId(), device).enqueue(callback);
     }
 
