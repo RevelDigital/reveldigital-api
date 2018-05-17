@@ -53,14 +53,14 @@ public class DeviceServiceTest {
 
     @Test
     public void testGetDevicesByType() throws Exception {
-        List<Device> devices = service.getDevices("AdvMedia");
+        List<Device> devices = service.getDevices("Google TV");
         assertTrue(devices.size() > 0);
     }
 
     @Test
     public void testGetDevice() throws Exception {
-        Device device = service.getDevice("kVlvOGGittV3m2A3hsPJVw");
-        assertTrue(device.getName().equals("RiPi"));
+        Device device = service.getDevice("rqZOZklOnH9XtR_BX8hsng");
+        assertTrue(device.getName().equals("DSE 2016"));
     }
 
     @Test

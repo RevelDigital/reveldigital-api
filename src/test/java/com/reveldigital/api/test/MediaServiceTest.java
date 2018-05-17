@@ -50,7 +50,7 @@ public class MediaServiceTest {
 
     @Test
     public void testGetMedia() throws Exception {
-        Media ret = service.getMedia("6QAaqjbg37ueyZI2_oeiww");
+        Media ret = service.getMedia("TMMRv6Bx7bNAgas0eRQvaw");
         assertTrue(ret.getName().equals("Blank"));
     }
 

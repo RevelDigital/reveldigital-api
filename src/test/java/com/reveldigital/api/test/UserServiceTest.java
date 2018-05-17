@@ -47,13 +47,13 @@ public class UserServiceTest {
 
     @Test
     public void testGetUser() throws Exception {
-        User ret = service.getUser("IrcEv6dviZU");
+        User ret = service.getUser("qK1tXVolFYU3hz_1uDwYSA");
         assertTrue(ret.getFirstName().equals("Catalyst"));
     }
 
     @Test
     public void testUpdateUser() throws Exception {
-        User ret = service.getUser("IrcEv6dviZU");
+        User ret = service.getUser("qK1tXVolFYU3hz_1uDwYSA");
         ret.setFirstName("Catalyst");
         service.updateUser(ret);
         assertTrue(ret.getFirstName().equals("Catalyst"));
